@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="740" viewBox="0 0 1000 740" font-family="Segoe UI, Arial, Helvetica, sans-serif">
+<rect x="0" y="0" width="1000" height="740" fill="#ffffff"/>
+<text x="36.0" y="34.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="20" font-weight="bold" fill="#1f2937">Grupo B — Historial de movimientos (lista doblemente enlazada)</text>
+<text x="36.0" y="56.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" fill="#64748b">Cronologia por envio · recorrible adelante (siguiente) y atras (anterior)</text>
+<path d="M 256.0 320.0 L 200.0 400.0" fill="none" stroke="#334155" stroke-width="1.6"/>
+<polygon points="256.0,320.0 247.0,324.1 246.3,333.9 255.2,329.8" fill="#334155" stroke="#334155" stroke-width="1.4"/>
+<text x="238.0" y="374.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11.5" font-weight="bold" fill="#1f2937" stroke="#ffffff" stroke-width="4" paint-order="stroke">cabeza/cola : 0..*</text>
+<path d="M 380.0 457.0 L 560.0 457.0" fill="none" stroke="#334155" stroke-width="1.6"/>
+<polygon points="380.0,457.0 388.5,462.0 397.0,457.0 388.5,452.0" fill="#334155" stroke="#334155" stroke-width="1.4"/>
+<text x="470.0" y="451.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11.5" font-weight="bold" fill="#1f2937" stroke="#ffffff" stroke-width="4" paint-order="stroke">movimiento : 1 (delete en dtor)</text>
+<path d="M 656.0 184.0 L 520.0 159.0" fill="none" stroke="#334155" stroke-width="1.6"/>
+<polygon points="656.0,184.0 648.5,177.5 639.3,180.9 646.7,187.4" fill="#334155" stroke="#334155" stroke-width="1.4"/>
+<text x="588.0" y="165.5" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11.5" font-weight="bold" fill="#1f2937" stroke="#ffffff" stroke-width="4" paint-order="stroke">historial : 1 (by value)</text>
+<path d="M 170.0 400.0 L 170.0 355.0 L 290.0 355.0 L 290.0 400.0" fill="none" stroke="#334155" stroke-width="1.6"/>
+<path d="M 285.0 389.0 L 290.0 400.0 L 295.0 389.0" fill="none" stroke="#334155" stroke-width="1.6" stroke-linecap="round"/>
+<text x="230.0" y="342.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11.5" font-weight="bold" fill="#1f2937" stroke="#ffffff" stroke-width="4" paint-order="stroke">siguiente / anterior</text>
+<rect x="80" y="90" width="440" height="230" rx="9" fill="#f0fdf4" stroke="#166534" stroke-width="1.6"/>
+<path d="M 80 114 q 0 -9 9 -9 h 422 q 9 0 9 9 v 18 h -440 z" fill="#15803d"/>
+<text x="91.0" y="105.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="10.5" font-style="italic" fill="rgba(255,255,255,0.85)">«class · lista doblemente enlazada»</text>
+<text x="91.0" y="124.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#ffffff">HistorialDeMovimientos</text>
+<text x="91.0" y="145.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">- cabeza : NodoMovimiento*</text>
+<text x="91.0" y="163.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">- cola : NodoMovimiento*</text>
+<text x="91.0" y="181.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">- contador : int</text>
+<line x1="80.0" y1="186.0" x2="520.0" y2="186.0" stroke="#94a3b8" stroke-width="1"/>
+<text x="91.0" y="199.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ HistorialDeMovimientos()</text>
+<text x="91.0" y="217.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ ~HistorialDeMovimientos()   // delete movimiento + nodo, en cascada</text>
+<text x="91.0" y="235.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ HistorialDeMovimientos(const HistorialDeMovimientos&amp;) = delete</text>
+<text x="91.0" y="253.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ agregarMovimiento(const string&amp;, const string&amp;)   // O(1) via cola</text>
+<text x="91.0" y="271.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ mostrarCronologico() const</text>
+<text x="91.0" y="289.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ mostrarInverso() const</text>
+<line x1="80.0" y1="294.0" x2="520.0" y2="294.0" stroke="#94a3b8" stroke-width="1"/>
+<text x="91.0" y="311.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="10.5" font-style="italic" fill="#64748b">Dueña de sus Movimiento* y nodos (delete en cascada)</text>
+<rect x="80" y="400" width="300" height="114" rx="9" fill="#f0fdf4" stroke="#166534" stroke-width="1.6"/>
+<path d="M 80 424 q 0 -9 9 -9 h 282 q 9 0 9 9 v 18 h -300 z" fill="#15803d"/>
+<text x="91.0" y="415.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="10.5" font-style="italic" fill="rgba(255,255,255,0.85)">«struct · nodo (doble enlace)»</text>
+<text x="91.0" y="434.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#ffffff">NodoMovimiento</text>
+<text x="91.0" y="455.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ movimiento : Movimiento*</text>
+<text x="91.0" y="473.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ siguiente : NodoMovimiento*</text>
+<text x="91.0" y="491.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ anterior : NodoMovimiento*</text>
+<line x1="80.0" y1="496.0" x2="380.0" y2="496.0" stroke="#94a3b8" stroke-width="1"/>
+<text x="91.0" y="509.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ NodoMovimiento(Movimiento*)</text>
+<rect x="560" y="400" width="310" height="114" rx="9" fill="#f0fdf4" stroke="#166534" stroke-width="1.6"/>
+<path d="M 560 424 q 0 -9 9 -9 h 292 q 9 0 9 9 v 18 h -310 z" fill="#15803d"/>
+<text x="571.0" y="415.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="10.5" font-style="italic" fill="rgba(255,255,255,0.85)">«struct»</text>
+<text x="571.0" y="434.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#ffffff">Movimiento</text>
+<text x="571.0" y="455.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ numero : int</text>
+<text x="571.0" y="473.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ estado : string</text>
+<text x="571.0" y="491.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ observacion : string</text>
+<line x1="560.0" y1="496.0" x2="870.0" y2="496.0" stroke="#94a3b8" stroke-width="1"/>
+<text x="571.0" y="509.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ Movimiento(int, const string&amp;, const string&amp;)</text>
+<rect x="560" y="70" width="320" height="114" rx="9" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.6" stroke-dasharray="7,4"/>
+<path d="M 560 94 q 0 -9 9 -9 h 302 q 9 0 9 9 v 18 h -320 z" fill="#64748b"/>
+<text x="571.0" y="85.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="10.5" font-style="italic" fill="rgba(255,255,255,0.85)">«contexto · Grupo C»</text>
+<text x="571.0" y="104.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#ffffff">Envio</text>
+<text x="571.0" y="125.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">- historial : HistorialDeMovimientos   (by value)</text>
+<text x="571.0" y="143.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ cambiarEstado(Estado, const string&amp;)</text>
+<text x="571.0" y="161.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ mostrarHistorialCronologico() const</text>
+<text x="571.0" y="179.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ mostrarHistorialInverso() const</text>
+<rect x="80" y="600" width="520" height="74" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2"/>
+<text x="92.0" y="619.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="#1f2937">Leyenda</text>
+<line x1="96" y1="636" x2="158" y2="636" stroke="#334155" stroke-width="1.6"/>
+<polygon points="96,636 105,632 114,636 105,640" fill="#334155" stroke="#334155"/>
+<text x="172.0" y="640.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11" fill="#1f2937">composicion (dueno ◆)</text>
+<line x1="96" y1="660" x2="158" y2="660" stroke="#334155" stroke-width="1.6"/>
+<path d="M 149 656 L 158 660 L 149 664" fill="none" stroke="#334155" stroke-width="1.6"/>
+<text x="172.0" y="664.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11" fill="#1f2937">asociacion (puntero sin propiedad o miembro por valor)</text>
+</svg>

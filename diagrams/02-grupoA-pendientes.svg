@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="780" viewBox="0 0 1100 780" font-family="Segoe UI, Arial, Helvetica, sans-serif">
+<rect x="0" y="0" width="1100" height="780" fill="#ffffff"/>
+<text x="36.0" y="34.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="20" font-weight="bold" fill="#1f2937">Grupo A — Cola de pendientes por prioridad (lista simplemente enlazada)</text>
+<text x="36.0" y="56.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" fill="#64748b">ListaPendientes ordena EXPRESS &gt; PRIORITARIO &gt; ESTANDAR (estable) · recursividad para resumen por zona</text>
+<path d="M 186.0 392.0 L 180.0 470.0" fill="none" stroke="#334155" stroke-width="1.6"/>
+<polygon points="186.0,392.0 180.4,400.1 184.7,408.9 190.3,400.9" fill="#334155" stroke="#334155" stroke-width="1.4"/>
+<text x="183.0" y="425.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11.5" font-weight="bold" fill="#1f2937" stroke="#ffffff" stroke-width="4" paint-order="stroke">comienzo : 0..*</text>
+<path d="M 205.0 566.0 L 205.0 630.0 L 720.0 630.0 L 760.0 571.2" fill="none" stroke="#334155" stroke-width="1.6"/>
+<path d="M 757.9 583.1 L 760.0 571.2 L 749.7 577.5" fill="none" stroke="#334155" stroke-width="1.6" stroke-linecap="round"/>
+<text x="466.1" y="624.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11.5" font-weight="bold" fill="#1f2937" stroke="#ffffff" stroke-width="4" paint-order="stroke">envio : 1 (no dueno)</text>
+<path d="M 396.0 392.0 L 522.5 470.0" fill="none" stroke="#334155" stroke-width="1.6" stroke-dasharray="6,4"/>
+<path d="M 510.5 468.5 L 522.5 470.0 L 515.8 460.0" fill="none" stroke="#334155" stroke-width="1.6" stroke-linecap="round"/>
+<text x="430.0" y="409.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11.5" font-weight="bold" fill="#1f2937" stroke="#ffffff" stroke-width="4" paint-order="stroke">resumenPorZona() : ResumenZona</text>
+<path d="M 459.0 392.0 L 459.0 436.0 L 735.0 436.0 L 760.0 361.0" fill="none" stroke="#334155" stroke-width="1.6" stroke-dasharray="6,4"/>
+<path d="M 761.3 373.0 L 760.0 361.0 L 751.8 369.9" fill="none" stroke="#334155" stroke-width="1.6" stroke-linecap="round"/>
+<text x="614.5" y="430.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11.5" font-weight="bold" fill="#1f2937" stroke="#ffffff" stroke-width="4" paint-order="stroke">compara getNivel() (prioridad)</text>
+<path d="M 80.0 494.0 L 40.0 494.0 L 40.0 542.0 L 80.0 542.0" fill="none" stroke="#334155" stroke-width="1.6"/>
+<path d="M 69.0 547.0 L 80.0 542.0 L 69.0 537.0" fill="none" stroke="#334155" stroke-width="1.6" stroke-linecap="round"/>
+<text x="18.0" y="578.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11.5" font-weight="bold" fill="#1f2937" stroke="#ffffff" stroke-width="4" paint-order="stroke">siguiente</text>
+<rect x="60" y="90" width="420" height="302" rx="9" fill="#eff6ff" stroke="#1e3a8a" stroke-width="1.6"/>
+<path d="M 60 114 q 0 -9 9 -9 h 402 q 9 0 9 9 v 18 h -420 z" fill="#1d4ed8"/>
+<text x="71.0" y="105.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="10.5" font-style="italic" fill="rgba(255,255,255,0.85)">«class · lista simple (cola de prioridad)»</text>
+<text x="71.0" y="124.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#ffffff">ListaPendientes</text>
+<text x="71.0" y="145.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">- comienzo : NodoPendiente*</text>
+<line x1="60.0" y1="150.0" x2="480.0" y2="150.0" stroke="#94a3b8" stroke-width="1"/>
+<text x="71.0" y="163.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ ListaPendientes()</text>
+<text x="71.0" y="181.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ ~ListaPendientes()   // solo borra sus nodos, nunca el Envio</text>
+<text x="71.0" y="199.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ ListaPendientes(const ListaPendientes&amp;) = delete</text>
+<text x="71.0" y="217.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ agregar(Envio*)   // insercion ordenada por prioridad (estable)</text>
+<text x="71.0" y="235.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ despachar() : Envio*   // extrae 1er nodo sin destruir el envio</text>
+<text x="71.0" y="253.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ remover(Envio*) : bool   // quita nodo sin destruir el envio</text>
+<text x="71.0" y="271.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ estaVacia() const : bool</text>
+<text x="71.0" y="289.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ mostrar() const</text>
+<text x="71.0" y="307.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ resumenPorZona(const string&amp;) const : ResumenZona</text>
+<text x="71.0" y="325.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ envioMasPesadoDeZona(const string&amp;) const : Envio*</text>
+<text x="71.0" y="343.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937"># resumirZonaRec(NodoPendiente*, const string&amp;) static</text>
+<text x="71.0" y="361.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937"># masPesadoDeZonaRec(NodoPendiente*, const string&amp;) static</text>
+<line x1="60.0" y1="366.0" x2="480.0" y2="366.0" stroke="#94a3b8" stroke-width="1"/>
+<text x="71.0" y="383.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="10.5" font-style="italic" fill="#64748b">NUNCA dueña de los Envio* (los owna ListaDeEnvios)</text>
+<rect x="80" y="470" width="250" height="96" rx="9" fill="#eff6ff" stroke="#1e3a8a" stroke-width="1.6"/>
+<path d="M 80 494 q 0 -9 9 -9 h 232 q 9 0 9 9 v 18 h -250 z" fill="#1d4ed8"/>
+<text x="91.0" y="485.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="10.5" font-style="italic" fill="rgba(255,255,255,0.85)">«struct · nodo»</text>
+<text x="91.0" y="504.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#ffffff">NodoPendiente</text>
+<text x="91.0" y="525.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ envio : Envio*</text>
+<text x="91.0" y="543.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ siguiente : NodoPendiente*</text>
+<line x1="80.0" y1="548.0" x2="330.0" y2="548.0" stroke="#94a3b8" stroke-width="1"/>
+<text x="91.0" y="561.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ NodoPendiente(Envio*)</text>
+<rect x="410" y="470" width="250" height="96" rx="9" fill="#eff6ff" stroke="#1e3a8a" stroke-width="1.6"/>
+<path d="M 410 494 q 0 -9 9 -9 h 232 q 9 0 9 9 v 18 h -250 z" fill="#1d4ed8"/>
+<text x="421.0" y="485.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="10.5" font-style="italic" fill="rgba(255,255,255,0.85)">«struct · anidada en ListaPendientes»</text>
+<text x="421.0" y="504.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#ffffff">ResumenZona</text>
+<text x="421.0" y="525.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ cantidad : int</text>
+<text x="421.0" y="543.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ pesoTotal : double</text>
+<text x="421.0" y="561.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ cantExpress : int</text>
+<rect x="760" y="480" width="300" height="114" rx="9" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.6" stroke-dasharray="7,4"/>
+<path d="M 760 504 q 0 -9 9 -9 h 282 q 9 0 9 9 v 18 h -300 z" fill="#64748b"/>
+<text x="771.0" y="495.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="10.5" font-style="italic" fill="rgba(255,255,255,0.85)">«contexto · Grupo C»</text>
+<text x="771.0" y="514.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#ffffff">Envio</text>
+<text x="771.0" y="535.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ getNivel() const : NivelServicio</text>
+<text x="771.0" y="553.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ getCodigo() const : string</text>
+<text x="771.0" y="571.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ getZona() const : string</text>
+<text x="771.0" y="589.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ getPeso() const : double</text>
+<rect x="760" y="90" width="250" height="158" rx="9" fill="#eff6ff" stroke="#1e3a8a" stroke-width="1.6"/>
+<path d="M 760 114 q 0 -9 9 -9 h 232 q 9 0 9 9 v 18 h -250 z" fill="#1d4ed8"/>
+<text x="771.0" y="105.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="10.5" font-style="italic" fill="rgba(255,255,255,0.85)">«enum class»</text>
+<text x="771.0" y="124.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#ffffff">Estado</text>
+<text x="771.0" y="145.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">RECIBIDO</text>
+<text x="771.0" y="163.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">CLASIFICADO</text>
+<text x="771.0" y="181.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">EN_REPARTO</text>
+<text x="771.0" y="199.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">REPROGRAMADO</text>
+<text x="771.0" y="217.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">ENTREGADO</text>
+<line x1="760.0" y1="222.0" x2="1010.0" y2="222.0" stroke="#94a3b8" stroke-width="1"/>
+<text x="771.0" y="239.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="10.5" font-style="italic" fill="#64748b">estadoToString() / intAEstado() (funciones libres)</text>
+<rect x="760" y="300" width="260" height="122" rx="9" fill="#eff6ff" stroke="#1e3a8a" stroke-width="1.6"/>
+<path d="M 760 324 q 0 -9 9 -9 h 242 q 9 0 9 9 v 18 h -260 z" fill="#1d4ed8"/>
+<text x="771.0" y="315.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="10.5" font-style="italic" fill="rgba(255,255,255,0.85)">«enum class»</text>
+<text x="771.0" y="334.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#ffffff">NivelServicio</text>
+<text x="771.0" y="355.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">EXPRESS     = 1</text>
+<text x="771.0" y="373.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">PRIORITARIO = 2</text>
+<text x="771.0" y="391.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">ESTANDAR    = 3</text>
+<line x1="760.0" y1="396.0" x2="1020.0" y2="396.0" stroke="#94a3b8" stroke-width="1"/>
+<text x="771.0" y="413.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="10.5" font-style="italic" fill="#64748b">el valor numerico ES la prioridad (menor = antes)</text>
+<rect x="60" y="660" width="520" height="98" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2"/>
+<text x="72.0" y="679.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="#1f2937">Leyenda</text>
+<line x1="76" y1="696" x2="138" y2="696" stroke="#334155" stroke-width="1.6"/>
+<polygon points="76,696 85,692 94,696 85,700" fill="#334155" stroke="#334155"/>
+<text x="152.0" y="700.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11" fill="#1f2937">composicion (dueno ◆)</text>
+<line x1="76" y1="720" x2="138" y2="720" stroke="#334155" stroke-width="1.6"/>
+<path d="M 129 716 L 138 720 L 129 724" fill="none" stroke="#334155" stroke-width="1.6"/>
+<text x="152.0" y="724.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11" fill="#1f2937">asociacion (puntero sin propiedad o miembro por valor)</text>
+<line x1="76" y1="744" x2="138" y2="744" stroke="#334155" stroke-width="1.6" stroke-dasharray="5,4"/>
+<path d="M 129 740 L 138 744 L 129 748" fill="none" stroke="#334155" stroke-width="1.6"/>
+<text x="152.0" y="748.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11" fill="#1f2937">dependencia (uso de tipos por parametro/retorno)</text>
+<text x="620.0" y="679.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11" font-style="italic" fill="#64748b">Caja gris punteada = tipo de otro grupo (contexto).</text>
+</svg>
