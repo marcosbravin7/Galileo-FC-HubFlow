@@ -42,13 +42,18 @@ public:
     // RF01/RF06 — insercion ordenada por prioridad estable: contempla lista
     // vacia, insercion al inicio, al medio y al final, conservando el orden
     // de llegada entre envios de igual prioridad.
-    void agregar(Envio* envio) {
+    //
+    // Un mismo Envio nunca puede figurar dos veces en pendientes: si ya esta
+    // (o si es nullptr) no hace nada y devuelve false. Es una red de
+    // seguridad para RF06/RF07, ademas de la maquina de estados (Estados.h).
+    bool agregar(Envio* envio) {
+        if (envio == nullptr || contiene(envio)) return false;
         NodoPendiente* nuevo = new NodoPendiente(envio);
 
         if (comienzo == nullptr || envio->getNivel() < comienzo->envio->getNivel()) {
             nuevo->siguiente = comienzo;
             comienzo = nuevo;
-            return;
+            return true;
         }
 
         NodoPendiente* aux = comienzo;
@@ -57,6 +62,15 @@ public:
         }
         nuevo->siguiente = aux->siguiente;
         aux->siguiente = nuevo;
+        return true;
+    }
+
+    // true si `envio` (el mismo objeto) ya figura en la lista. O(n).
+    bool contiene(const Envio* envio) const {
+        for (NodoPendiente* aux = comienzo; aux != nullptr; aux = aux->siguiente) {
+            if (aux->envio == envio) return true;
+        }
+        return false;
     }
 
     // RF05 — el proximo envio a despachar es siempre el primer nodo.
@@ -74,9 +88,9 @@ public:
     bool estaVacia() const { return comienzo == nullptr; }
 
     // Elimina (si existe) el nodo que referencia a `envio`, sin destruir el
-    // Envio. Se usa para mantener consistencia cuando un envio pasa a un
-    // estado final (ENTREGADO) sin haber pasado por despachar(), por ejemplo
-    // si se lo cambia directamente con "cambiar estado". Devuelve true si
+    // Envio. Se usa para mantener la invariante "pendiente <=> estado
+    // RECIBIDO/CLASIFICADO/REPROGRAMADO" cuando un envio pasa a EN_REPARTO
+    // por "cambiar estado" en lugar de por despachar(). Devuelve true si
     // encontro y quito el nodo.
     bool remover(Envio* envio) {
         if (comienzo == nullptr || envio == nullptr) return false;
@@ -112,6 +126,31 @@ public:
             aux->envio->mostrar();
             aux = aux->siguiente;
         }
+    }
+
+    // RF09.1 — cantidad de pendientes de una zona (recorrido de solo lectura).
+    // O(n). Permite dimensionar el arreglo del lote antes de copiar.
+    int contarDeZona(const string& zona) const {
+        int total = 0;
+        for (NodoPendiente* aux = comienzo; aux != nullptr; aux = aux->siguiente) {
+            if (aux->envio->getZona() == zona) total++;
+        }
+        return total;
+    }
+
+    // RF09.1 — copia en `destino` las REFERENCIAS (Envio*) de los pendientes
+    // de una zona, en el orden actual de la lista. No duplica ningun Envio ni
+    // modifica la lista. Devuelve cuantas referencias copio (nunca mas de
+    // `capacidad`). O(n).
+    int copiarDeZona(const string& zona, Envio** destino, int capacidad) const {
+        int copiados = 0;
+        for (NodoPendiente* aux = comienzo; aux != nullptr && copiados < capacidad; aux = aux->siguiente) {
+            if (aux->envio->getZona() == zona) {
+                destino[copiados] = aux->envio;
+                copiados++;
+            }
+        }
+        return copiados;
     }
 
     // Resumen recursivo por zona (Seccion 12 de la consigna).

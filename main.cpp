@@ -15,8 +15,161 @@ void mostrarMenu() {
     cout << "7. Mostrar historial\n";
     cout << "8. Resumen recursivo por zona\n";
     cout << "9. Envio mas pesado por zona (desafio)\n";
-    cout << "10. Finalizar\n";
+    cout << "10. Mesa de clasificacion y despacho (RF09)\n";
+    cout << "11. Registrar entrega (RF07)\n";
+    cout << "12. Indice de envios BST (RF10)\n";
+    cout << "0.  Finalizar\n";
     cout << "Opcion: ";
+}
+
+void mostrarMenuBST() {
+    cout << "\n===== INDICE DE ENVIOS (BST) =====\n";
+    cout << "1. Buscar envio por codigo en el BST\n";
+    cout << "2. Recorrido in-order (codigo ascendente)\n";
+    cout << "3. Altura y cantidad de nodos\n";
+    cout << "4. Comparar BST vs busqueda lineal\n";
+    cout << "0. Volver\n";
+    cout << "Opcion: ";
+}
+
+// Submenu del RF10. El BST es de solo lectura desde aca: se actualiza solo
+// al registrar envios y no modifica los envios ni las demas estructuras.
+void menuBST(CentroDeDistribucion& cd) {
+    int op = -1;
+    while (op != 0) {
+        mostrarMenuBST();
+        cin >> op;
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Opcion invalida.\n";
+            op = -1;   // una lectura fallida deja op en 0: evita salir sin querer
+            continue;
+        }
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+        if (op == 1) {
+            string cod;
+            cout << "Codigo a buscar: "; getline(cin, cod);
+            cd.buscarEnBST(cod);
+
+        } else if (op == 2) {
+            cd.recorrerBSTInOrder();
+
+        } else if (op == 3) {
+            cd.mostrarAlturaBST();
+
+        } else if (op == 4) {
+            string cod;
+            cout << "Codigo a buscar: "; getline(cin, cod);
+            cd.compararBSTconLineal(cod);
+
+        } else if (op != 0) {
+            cout << "Opcion invalida.\n";
+        }
+    }
+}
+
+void mostrarMenuMesa() {
+    cout << "\n===== MESA DE CLASIFICACION Y DESPACHO =====\n";
+    cout << "1.  Crear lote por zona\n";
+    cout << "2.  Ordenar lote por codigo (ascendente)\n";
+    cout << "3.  Ordenar lote por peso (descendente)\n";
+    cout << "4.  Ver lote\n";
+    cout << "5.  Cargar lote en la cola de preparacion\n";
+    cout << "6.  Procesar siguiente (dequeue -> push)\n";
+    cout << "7.  Ver cola de preparacion\n";
+    cout << "8.  Ver pila de procesados\n";
+    cout << "9.  Ver ultimo procesado (top)\n";
+    cout << "10. Busqueda lineal en el lote\n";
+    cout << "11. Busqueda binaria en el lote\n";
+    cout << "12. Comparar busqueda lineal vs binaria\n";
+    cout << "0.  Volver\n";
+    cout << "Opcion: ";
+}
+
+// Submenu del RF09. Trabaja sobre el lote temporal de la mesa; no modifica
+// los envios ni la lista de pendientes.
+void menuMesa(CentroDeDistribucion& cd) {
+    MesaDeClasificacion& mesa = cd.mesa();
+    int op = -1;
+    while (op != 0) {
+        mostrarMenuMesa();
+        cin >> op;
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Opcion invalida.\n";
+            op = -1;   // una lectura fallida deja op en 0: evita salir sin querer
+            continue;
+        }
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+        if (op == 1) {
+            string zona;
+            cout << "Zona (NORTE/SUR/CENTRO): "; getline(cin, zona);
+            if (cd.crearLoteZona(zona)) {
+                cout << "Lote creado.\n";
+                mesa.mostrarLote();
+            }
+
+        } else if (op == 2) {
+            if (mesa.ordenar(CriterioOrden::CODIGO_ASC)) {
+                cout << "Lote ordenado por codigo (Insertion Sort).\n";
+                mesa.mostrarLote();
+            }
+
+        } else if (op == 3) {
+            if (mesa.ordenar(CriterioOrden::PESO_DESC)) {
+                cout << "Lote ordenado por peso descendente (Insertion Sort).\n";
+                mesa.mostrarLote();
+            }
+
+        } else if (op == 4) {
+            mesa.mostrarLote();
+
+        } else if (op == 5) {
+            if (mesa.cargarColaPreparacion()) {
+                cout << "Lote cargado en la cola de preparacion.\n";
+                mesa.mostrarCola();
+            }
+
+        } else if (op == 6) {
+            Envio* e = mesa.procesarSiguiente();
+            if (e != nullptr) {
+                cout << "Procesado: " << e->getCodigo() << "\n";
+                mesa.mostrarCola();
+                mesa.mostrarPila();
+            }
+
+        } else if (op == 7) {
+            mesa.mostrarCola();
+
+        } else if (op == 8) {
+            mesa.mostrarPila();
+
+        } else if (op == 9) {
+            mesa.mostrarUltimoProcesado();
+
+        } else if (op == 10) {
+            string cod;
+            cout << "Codigo a buscar: "; getline(cin, cod);
+            mesa.mostrarBusquedaLineal(cod);
+
+        } else if (op == 11) {
+            string cod;
+            cout << "Codigo a buscar: "; getline(cin, cod);
+            mesa.mostrarBusquedaBinaria(cod);
+
+        } else if (op == 12) {
+            string cod;
+            cout << "Codigo a buscar: "; getline(cin, cod);
+            mesa.compararBusquedas(cod);
+
+        } else if (op != 0) {
+            cout << "Opcion invalida.\n";
+        }
+    }
 }
 
 void cargarDataset(CentroDeDistribucion& cd) {
@@ -36,7 +189,7 @@ int main() {
     cout << "Cargando dataset inicial...\n";
     cargarDataset(cd);
 
-    int opcion;
+    int opcion = -1;
     do {
         mostrarMenu();
         cin >> opcion;
@@ -44,6 +197,7 @@ int main() {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cout << "Opcion invalida.\n";
+            opcion = -1;   // una lectura fallida deja opcion en 0 (= salir): se evita
             continue;
         }
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -113,16 +267,30 @@ int main() {
             cd.envioMasPesadoDeZona(zona);
 
         } else if (opcion == 10) {
+            menuMesa(cd);
+
+        } else if (opcion == 11) {
+            string cod, obs;
+            cout << "Codigo: "; getline(cin, cod);
+            cout << "Observacion: "; getline(cin, obs);
+            cd.finalizarEntrega(cod, obs);
+
+        } else if (opcion == 12) {
+            menuBST(cd);
+
+        } else if (opcion == 0) {
             cout << "Finalizando... liberando memoria.\n";
 
         } else {
             cout << "Opcion invalida.\n";
         }
 
-    } while (opcion != 10);
+    } while (opcion != 0);
 
     return 0;
     // Al salir de main, ~CentroDeDistribucion() libera todo en cascada:
-    // ~ListaDeEnvios() destruye cada Envio (y su historial), y
-    // ~ListaPendientes() destruye sus propios nodos.
+    // primero la mesa y el indice BST (solo sus nodos/arreglos), despues
+    // ~ListaPendientes() (solo sus nodos) y por ultimo ~ListaDeEnvios(), que
+    // destruye cada Envio (y su historial). Solo ListaDeEnvios hace delete
+    // sobre los Envio.
 }

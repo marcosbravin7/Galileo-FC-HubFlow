@@ -39,6 +39,50 @@ inline string estadoToString(Estado e) {
     return "DESCONOCIDO";
 }
 
+// ---------------------------------------------------------------------------
+// Maquina de estados del envio (RF04 / RF06 / RF07)
+// ---------------------------------------------------------------------------
+//   RECIBIDO     -> CLASIFICADO | EN_REPARTO
+//   CLASIFICADO  -> EN_REPARTO
+//   EN_REPARTO   -> REPROGRAMADO | ENTREGADO
+//   REPROGRAMADO -> EN_REPARTO
+//   ENTREGADO    -> (estado FINAL: no admite ningun cambio)
+//
+// Es el recorrido del ejemplo del RF08:
+//   RECIBIDO, CLASIFICADO, EN_REPARTO, REPROGRAMADO, EN_REPARTO, ENTREGADO.
+// (RECIBIDO -> EN_REPARTO existe porque "despachar" no obliga a clasificar.)
+//
+// Para cambiar las reglas basta con tocar esta unica funcion.
+inline bool transicionPermitida(Estado desde, Estado hacia) {
+    switch (desde) {
+        case Estado::RECIBIDO:     return hacia == Estado::CLASIFICADO || hacia == Estado::EN_REPARTO;
+        case Estado::CLASIFICADO:  return hacia == Estado::EN_REPARTO;
+        case Estado::EN_REPARTO:   return hacia == Estado::REPROGRAMADO || hacia == Estado::ENTREGADO;
+        case Estado::REPROGRAMADO: return hacia == Estado::EN_REPARTO;
+        case Estado::ENTREGADO:    return false;
+    }
+    return false;
+}
+
+// Invariante del sistema: un envio figura en la lista de pendientes si y
+// solo si su estado es RECIBIDO, CLASIFICADO o REPROGRAMADO. EN_REPARTO y
+// ENTREGADO significan que ya salio de pendientes.
+inline bool estadoEsPendiente(Estado e) {
+    return e == Estado::RECIBIDO || e == Estado::CLASIFICADO || e == Estado::REPROGRAMADO;
+}
+
+// Texto con los estados a los que se puede pasar desde `desde` (para los mensajes de error).
+inline string transicionesDesde(Estado desde) {
+    switch (desde) {
+        case Estado::RECIBIDO:     return "CLASIFICADO o EN_REPARTO";
+        case Estado::CLASIFICADO:  return "EN_REPARTO";
+        case Estado::EN_REPARTO:   return "REPROGRAMADO o ENTREGADO";
+        case Estado::REPROGRAMADO: return "EN_REPARTO";
+        case Estado::ENTREGADO:    return "ninguno (estado final)";
+    }
+    return "ninguno";
+}
+
 // Convierte la opcion numerica que ingresa el usuario por consola
 // (0=RECIBIDO ... 4=ENTREGADO) a Estado. Devuelve false si no es valida.
 inline bool intAEstado(int valor, Estado& out) {

@@ -74,6 +74,20 @@ public:
         return nullptr;
     }
 
+    // Igual que buscar(), pero cuenta cuantos envios se compararon. Sirve para
+    // comparar la busqueda lineal con la del BST (RF10) sobre el MISMO
+    // conjunto de datos. Mejor caso O(1), peor caso O(n).
+    Envio* buscarContando(const string& codigo, int& comparaciones) const {
+        comparaciones = 0;
+        NodoEnvio* actual = comienzo;
+        while (actual != nullptr) {
+            comparaciones++;
+            if (actual->envio->getCodigo() == codigo) return actual->envio;
+            actual = actual->siguiente;
+        }
+        return nullptr;
+    }
+
     // RF01 — verifica que el codigo no este repetido.
     bool existeCodigo(const string& codigo) const { return buscar(codigo) != nullptr; }
 
