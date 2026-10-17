@@ -1,0 +1,237 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2000" height="1606" viewBox="0 0 2000 1606" font-family="Segoe UI, Arial, Helvetica, sans-serif">
+<rect x="0" y="0" width="2000" height="1606" fill="#ffffff"/>
+<text x="36.0" y="34.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="20" font-weight="bold" fill="#1f2937">HubFlow — Clases y Estructuras Nuevas (RF09 y RF10)</text>
+<text x="36.0" y="56.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" fill="#64748b">Mesa de clasificación (lote, Insertion Sort, Queue, Stack) y Árbol Binario de Búsqueda (BST) · C++17</text>
+<path d="M 730.0 264.0 L 335.0 264.0 L 335.0 380.0" fill="none" stroke="#334155" stroke-width="1.6"/>
+<polygon points="730.0,264.0 721.5,259.0 713.0,264.0 721.5,269.0" fill="#334155" stroke="#334155" stroke-width="1.4"/>
+<text x="530.0" y="246.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11.5" font-weight="bold" fill="#1f2937" stroke="#ffffff" stroke-width="4" paint-order="stroke">mesaClasificacion : 1 (by value)</text>
+<path d="M 1290.0 195.0 L 1538.0 195.0 L 1538.0 380.0" fill="none" stroke="#334155" stroke-width="1.6"/>
+<polygon points="1290.0,195.0 1298.5,200.0 1307.0,195.0 1298.5,190.0" fill="#334155" stroke="#334155" stroke-width="1.4"/>
+<text x="1410.0" y="179.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11.5" font-weight="bold" fill="#1f2937" stroke="#ffffff" stroke-width="4" paint-order="stroke">indice : 1 (by value)</text>
+<path d="M 170.0 380.0 L 170.4 214.0" fill="none" stroke="#334155" stroke-width="1.6" stroke-dasharray="6,4"/>
+<path d="M 175.4 225.0 L 170.4 214.0 L 165.4 225.0" fill="none" stroke="#334155" stroke-width="1.6" stroke-linecap="round"/>
+<text x="170.2" y="291.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11.5" font-weight="bold" fill="#1f2937" stroke="#ffffff" stroke-width="4" paint-order="stroke">crearLote(pendientes, zona)</text>
+<path d="M 142.5 826.0 L 180.0 870.0" fill="none" stroke="#334155" stroke-width="1.6"/>
+<path d="M 169.1 864.9 L 180.0 870.0 L 176.7 858.4" fill="none" stroke="#334155" stroke-width="1.6" stroke-linecap="round"/>
+<text x="161.2" y="842.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11.5" font-weight="bold" fill="#1f2937" stroke="#ffffff" stroke-width="4" paint-order="stroke">orden : 1</text>
+<path d="M 400.0 826.0 L 400.0 1040.0" fill="none" stroke="#334155" stroke-width="1.6"/>
+<polygon points="400.0,826.0 395.0,834.5 400.0,843.0 405.0,834.5" fill="#334155" stroke="#334155" stroke-width="1.4"/>
+<text x="360.0" y="924.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11.5" font-weight="bold" fill="#1f2937" stroke="#ffffff" stroke-width="4" paint-order="stroke">colaPreparacion : 1</text>
+<path d="M 527.0 826.0 L 527.0 960.0 L 955.0 960.0 L 955.0 1040.0" fill="none" stroke="#334155" stroke-width="1.6"/>
+<polygon points="527.0,826.0 522.0,834.5 527.0,843.0 532.0,834.5" fill="#334155" stroke="#334155" stroke-width="1.4"/>
+<text x="740.0" y="944.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11.5" font-weight="bold" fill="#1f2937" stroke="#ffffff" stroke-width="4" paint-order="stroke">pilaProcesados : 1</text>
+<path d="M 500.0 1153.6 L 540.0 1118.4" fill="none" stroke="#334155" stroke-width="1.6"/>
+<polygon points="500.0,1153.6 509.7,1151.7 512.8,1142.4 503.1,1144.2" fill="#334155" stroke="#334155" stroke-width="1.4"/>
+<text x="520.0" y="1130.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11.5" font-weight="bold" fill="#1f2937" stroke="#ffffff" stroke-width="4" paint-order="stroke">frente / fondo : 0..*</text>
+<path d="M 1270.0 1146.4 L 1310.0 1118.4" fill="none" stroke="#334155" stroke-width="1.6"/>
+<polygon points="1270.0,1146.4 1279.8,1145.6 1283.9,1136.7 1274.1,1137.4" fill="#334155" stroke="#334155" stroke-width="1.4"/>
+<text x="1290.0" y="1126.4" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11.5" font-weight="bold" fill="#1f2937" stroke="#ffffff" stroke-width="4" paint-order="stroke">tope : 0..*</text>
+<path d="M 1706.0 682.0 L 1740.0 780.0" fill="none" stroke="#334155" stroke-width="1.6"/>
+<polygon points="1706.0,682.0 1704.1,691.7 1711.6,698.1 1713.5,688.4" fill="#334155" stroke="#334155" stroke-width="1.4"/>
+<text x="1723.0" y="725.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11.5" font-weight="bold" fill="#1f2937" stroke="#ffffff" stroke-width="4" paint-order="stroke">raiz : 0..*</text>
+<path d="M 610.0 558.4 L 750.0 549.0" fill="none" stroke="#334155" stroke-width="1.6"/>
+<path d="M 739.4 554.7 L 750.0 549.0 L 738.7 544.7" fill="none" stroke="#334155" stroke-width="1.6" stroke-linecap="round"/>
+<text x="680.0" y="547.7" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11.5" font-weight="bold" fill="#1f2937" stroke="#ffffff" stroke-width="4" paint-order="stroke">lote : Envio** (no dueno)</text>
+<path d="M 670.0 1080.0 L 670.0 750.0 L 838.0 750.0 L 838.0 710.0" fill="none" stroke="#334155" stroke-width="1.6"/>
+<path d="M 843.0 721.0 L 838.0 710.0 L 833.0 721.0" fill="none" stroke="#334155" stroke-width="1.6" stroke-linecap="round"/>
+<text x="750.0" y="734.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11.5" font-weight="bold" fill="#1f2937" stroke="#ffffff" stroke-width="4" paint-order="stroke">envio : 1</text>
+<path d="M 1440.0 1080.0 L 1440.0 750.0 L 1058.0 750.0 L 1058.0 710.0" fill="none" stroke="#334155" stroke-width="1.6"/>
+<path d="M 1063.0 721.0 L 1058.0 710.0 L 1053.0 721.0" fill="none" stroke="#334155" stroke-width="1.6" stroke-linecap="round"/>
+<text x="1250.0" y="734.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11.5" font-weight="bold" fill="#1f2937" stroke="#ffffff" stroke-width="4" paint-order="stroke">envio : 1</text>
+<path d="M 1600.0 825.0 L 1240.0 825.0 L 1240.0 618.0 L 1190.0 618.0" fill="none" stroke="#334155" stroke-width="1.6"/>
+<path d="M 1201.0 613.0 L 1190.0 618.0 L 1201.0 623.0" fill="none" stroke="#334155" stroke-width="1.6" stroke-linecap="round"/>
+<text x="1350.0" y="809.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11.5" font-weight="bold" fill="#1f2937" stroke="#ffffff" stroke-width="4" paint-order="stroke">envio : 1</text>
+<path d="M 618.0 1176.0 L 618.0 1220.0 L 722.0 1220.0 L 722.0 1176.0" fill="none" stroke="#334155" stroke-width="1.6"/>
+<path d="M 727.0 1187.0 L 722.0 1176.0 L 717.0 1187.0" fill="none" stroke="#334155" stroke-width="1.6" stroke-linecap="round"/>
+<text x="670.0" y="1224.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11.5" font-weight="bold" fill="#1f2937" stroke="#ffffff" stroke-width="4" paint-order="stroke">siguiente</text>
+<path d="M 1388.0 1176.0 L 1388.0 1220.0 L 1492.0 1220.0 L 1492.0 1176.0" fill="none" stroke="#334155" stroke-width="1.6"/>
+<path d="M 1497.0 1187.0 L 1492.0 1176.0 L 1487.0 1187.0" fill="none" stroke="#334155" stroke-width="1.6" stroke-linecap="round"/>
+<text x="1440.0" y="1224.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11.5" font-weight="bold" fill="#1f2937" stroke="#ffffff" stroke-width="4" paint-order="stroke">debajo</text>
+<path d="M 1684.0 894.0 L 1684.0 940.0 L 1796.0 940.0 L 1796.0 894.0" fill="none" stroke="#334155" stroke-width="1.6"/>
+<path d="M 1801.0 905.0 L 1796.0 894.0 L 1791.0 905.0" fill="none" stroke="#334155" stroke-width="1.6" stroke-linecap="round"/>
+<text x="1740.0" y="944.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11.5" font-weight="bold" fill="#1f2937" stroke="#ffffff" stroke-width="4" paint-order="stroke">izq / der</text>
+<rect x="60" y="380" width="550" height="446" rx="9" fill="#f0fdfa" stroke="#115e59" stroke-width="1.6"/>
+<path d="M 60 404 q 0 -9 9 -9 h 532 q 9 0 9 9 v 18 h -550 z" fill="#0f766e"/>
+<text x="71.0" y="395.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="10.5" font-style="italic" fill="rgba(255,255,255,0.85)">«class · RF09»</text>
+<text x="71.0" y="414.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#ffffff">MesaDeClasificacion</text>
+<text x="71.0" y="435.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">- zona : string</text>
+<text x="71.0" y="453.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">- lote : Envio**   // arreglo dinamico de punteros</text>
+<text x="71.0" y="471.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">- cantidad : int</text>
+<text x="71.0" y="489.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">- orden : CriterioOrden</text>
+<text x="71.0" y="507.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">- colaPreparacion : ColaEnvios   (by value)</text>
+<text x="71.0" y="525.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">- pilaProcesados : PilaEnvios   (by value)</text>
+<line x1="60.0" y1="530.0" x2="610.0" y2="530.0" stroke="#94a3b8" stroke-width="1"/>
+<text x="71.0" y="543.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ MesaDeClasificacion()</text>
+<text x="71.0" y="561.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ ~MesaDeClasificacion()   // delete[] lote (no Envio)</text>
+<text x="71.0" y="579.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ MesaDeClasificacion(const MesaDeClasificacion&amp;) = delete</text>
+<text x="71.0" y="597.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ crearLote(const ListaPendientes&amp;, const string&amp;) : bool</text>
+<text x="71.0" y="615.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ ordenar(CriterioOrden) : bool   // Insertion Sort manual</text>
+<text x="71.0" y="633.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ cargarColaPreparacion() : bool</text>
+<text x="71.0" y="651.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ procesarSiguiente() : Envio*   // dequeue -&gt; push</text>
+<text x="71.0" y="669.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ ultimoProcesado() const : Envio*</text>
+<text x="71.0" y="687.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ buscarLineal(const string&amp;, int&amp;) const : int</text>
+<text x="71.0" y="705.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ buscarBinaria(const string&amp;, int&amp;, bool) const : int</text>
+<text x="71.0" y="723.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ getCantidad() const : int</text>
+<text x="71.0" y="741.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ getOrden() const : CriterioOrden</text>
+<text x="71.0" y="759.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ getZona() const : const string&amp;</text>
+<text x="71.0" y="777.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ getEnvio(int) const : Envio*</text>
+<text x="71.0" y="795.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ loteOrdenadoPorCodigo() const : bool</text>
+<line x1="60.0" y1="800.0" x2="610.0" y2="800.0" stroke="#94a3b8" stroke-width="1"/>
+<text x="71.0" y="817.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="10.5" font-style="italic" fill="#64748b">Lote temporal por zona; Envio* no propietarios</text>
+<rect x="60" y="870" width="240" height="122" rx="9" fill="#f0fdfa" stroke="#115e59" stroke-width="1.6"/>
+<path d="M 60 894 q 0 -9 9 -9 h 222 q 9 0 9 9 v 18 h -240 z" fill="#0f766e"/>
+<text x="71.0" y="885.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="10.5" font-style="italic" fill="rgba(255,255,255,0.85)">«enum class · RF09.2»</text>
+<text x="71.0" y="904.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#ffffff">CriterioOrden</text>
+<text x="71.0" y="925.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">NINGUNO</text>
+<text x="71.0" y="943.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">CODIGO_ASC</text>
+<text x="71.0" y="961.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">PESO_DESC</text>
+<line x1="60.0" y1="966.0" x2="300.0" y2="966.0" stroke="#94a3b8" stroke-width="1"/>
+<text x="71.0" y="983.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="10.5" font-style="italic" fill="#64748b">criterio de orden del lote</text>
+<rect x="60" y="1040" width="440" height="284" rx="9" fill="#f0fdfa" stroke="#115e59" stroke-width="1.6"/>
+<path d="M 60 1064 q 0 -9 9 -9 h 422 q 9 0 9 9 v 18 h -440 z" fill="#0f766e"/>
+<text x="71.0" y="1055.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="10.5" font-style="italic" fill="rgba(255,255,255,0.85)">«class · Queue FIFO · RF09.3»</text>
+<text x="71.0" y="1074.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#ffffff">ColaEnvios</text>
+<text x="71.0" y="1095.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">- frente : NodoCola*</text>
+<text x="71.0" y="1113.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">- fondo : NodoCola*</text>
+<text x="71.0" y="1131.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">- cantidad : int</text>
+<line x1="60.0" y1="1136.0" x2="500.0" y2="1136.0" stroke="#94a3b8" stroke-width="1"/>
+<text x="71.0" y="1149.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ ColaEnvios()</text>
+<text x="71.0" y="1167.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ ~ColaEnvios()   // vaciar()</text>
+<text x="71.0" y="1185.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ ColaEnvios(const ColaEnvios&amp;) = delete</text>
+<text x="71.0" y="1203.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ enqueue(Envio*)   // O(1) al fondo</text>
+<text x="71.0" y="1221.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ dequeue() : Envio*   // O(1) frente (no destruye Envio)</text>
+<text x="71.0" y="1239.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ front() const : Envio*</text>
+<text x="71.0" y="1257.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ isEmpty() const : bool</text>
+<text x="71.0" y="1275.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ size() const : int</text>
+<text x="71.0" y="1293.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ vaciar()   // libera solo nodos</text>
+<line x1="60.0" y1="1298.0" x2="500.0" y2="1298.0" stroke="#94a3b8" stroke-width="1"/>
+<text x="71.0" y="1315.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="10.5" font-style="italic" fill="#64748b">Queue FIFO propia; O(1) enqueue/dequeue</text>
+<rect x="540" y="1080" width="260" height="96" rx="9" fill="#f0fdfa" stroke="#115e59" stroke-width="1.6"/>
+<path d="M 540 1104 q 0 -9 9 -9 h 242 q 9 0 9 9 v 18 h -260 z" fill="#0f766e"/>
+<text x="551.0" y="1095.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="10.5" font-style="italic" fill="rgba(255,255,255,0.85)">«struct · nodo FIFO»</text>
+<text x="551.0" y="1114.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#ffffff">NodoCola</text>
+<text x="551.0" y="1135.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ envio : Envio*   // no propietario</text>
+<text x="551.0" y="1153.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ siguiente : NodoCola*</text>
+<line x1="540.0" y1="1158.0" x2="800.0" y2="1158.0" stroke="#94a3b8" stroke-width="1"/>
+<text x="551.0" y="1171.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ NodoCola(Envio*)</text>
+<rect x="850" y="1040" width="420" height="266" rx="9" fill="#f0fdfa" stroke="#115e59" stroke-width="1.6"/>
+<path d="M 850 1064 q 0 -9 9 -9 h 402 q 9 0 9 9 v 18 h -420 z" fill="#0f766e"/>
+<text x="861.0" y="1055.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="10.5" font-style="italic" fill="rgba(255,255,255,0.85)">«class · Stack LIFO · RF09.4»</text>
+<text x="861.0" y="1074.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#ffffff">PilaEnvios</text>
+<text x="861.0" y="1095.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">- tope : NodoPila*</text>
+<text x="861.0" y="1113.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">- cantidad : int</text>
+<line x1="850.0" y1="1118.0" x2="1270.0" y2="1118.0" stroke="#94a3b8" stroke-width="1"/>
+<text x="861.0" y="1131.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ PilaEnvios()</text>
+<text x="861.0" y="1149.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ ~PilaEnvios()   // vaciar()</text>
+<text x="861.0" y="1167.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ PilaEnvios(const PilaEnvios&amp;) = delete</text>
+<text x="861.0" y="1185.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ push(Envio*)   // O(1) al tope</text>
+<text x="861.0" y="1203.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ pop() : Envio*   // O(1) tope (no destruye Envio)</text>
+<text x="861.0" y="1221.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ top() const : Envio*</text>
+<text x="861.0" y="1239.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ isEmpty() const : bool</text>
+<text x="861.0" y="1257.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ size() const : int</text>
+<text x="861.0" y="1275.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ vaciar()   // libera solo nodos</text>
+<line x1="850.0" y1="1280.0" x2="1270.0" y2="1280.0" stroke="#94a3b8" stroke-width="1"/>
+<text x="861.0" y="1297.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="10.5" font-style="italic" fill="#64748b">Stack LIFO propia; historial inmediato</text>
+<rect x="1310" y="1080" width="260" height="96" rx="9" fill="#f0fdfa" stroke="#115e59" stroke-width="1.6"/>
+<path d="M 1310 1104 q 0 -9 9 -9 h 242 q 9 0 9 9 v 18 h -260 z" fill="#0f766e"/>
+<text x="1321.0" y="1095.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="10.5" font-style="italic" fill="rgba(255,255,255,0.85)">«struct · nodo LIFO»</text>
+<text x="1321.0" y="1114.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#ffffff">NodoPila</text>
+<text x="1321.0" y="1135.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ envio : Envio*   // no propietario</text>
+<text x="1321.0" y="1153.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ debajo : NodoPila*</text>
+<line x1="1310.0" y1="1158.0" x2="1570.0" y2="1158.0" stroke="#94a3b8" stroke-width="1"/>
+<text x="1321.0" y="1171.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ NodoPila(Envio*)</text>
+<rect x="1370" y="380" width="560" height="302" rx="9" fill="#ecfdf5" stroke="#065f46" stroke-width="1.6"/>
+<path d="M 1370 404 q 0 -9 9 -9 h 542 q 9 0 9 9 v 18 h -560 z" fill="#047857"/>
+<text x="1381.0" y="395.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="10.5" font-style="italic" fill="rgba(255,255,255,0.85)">«class · ABB / BST · RF10»</text>
+<text x="1381.0" y="414.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#ffffff">IndiceBST</text>
+<text x="1381.0" y="435.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">- raiz : NodoBST*</text>
+<text x="1381.0" y="453.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">- cantidad : int</text>
+<line x1="1370.0" y1="458.0" x2="1930.0" y2="458.0" stroke="#94a3b8" stroke-width="1"/>
+<text x="1381.0" y="471.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ IndiceBST()</text>
+<text x="1381.0" y="489.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ ~IndiceBST()   // postorden: delete nodos (no Envio)</text>
+<text x="1381.0" y="507.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ IndiceBST(const IndiceBST&amp;) = delete</text>
+<text x="1381.0" y="525.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ insertar(Envio*) : bool   // iterativo O(log n)</text>
+<text x="1381.0" y="543.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ buscar(const string&amp;, int&amp;, bool) const : Envio*</text>
+<text x="1381.0" y="561.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ mostrarInOrder() const   // recursivo O(n)</text>
+<text x="1381.0" y="579.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ altura() const : int   // recursivo O(n), cuenta niveles</text>
+<text x="1381.0" y="597.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ alturaMinimaPosible(int) static : int</text>
+<text x="1381.0" y="615.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ estaVacio() const : bool</text>
+<text x="1381.0" y="633.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ getCantidad() const : int</text>
+<text x="1381.0" y="651.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ getRaiz() const : const NodoBST*</text>
+<line x1="1370.0" y1="656.0" x2="1930.0" y2="656.0" stroke="#94a3b8" stroke-width="1"/>
+<text x="1381.0" y="673.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="10.5" font-style="italic" fill="#64748b">ABB ordenado por codigo; Envio* no propietarios</text>
+<rect x="1600" y="780" width="280" height="114" rx="9" fill="#ecfdf5" stroke="#065f46" stroke-width="1.6"/>
+<path d="M 1600 804 q 0 -9 9 -9 h 262 q 9 0 9 9 v 18 h -280 z" fill="#047857"/>
+<text x="1611.0" y="795.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="10.5" font-style="italic" fill="rgba(255,255,255,0.85)">«struct · nodo BST»</text>
+<text x="1611.0" y="814.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#ffffff">NodoBST</text>
+<text x="1611.0" y="835.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ envio : Envio*   // no propietario</text>
+<text x="1611.0" y="853.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ izq : NodoBST*</text>
+<text x="1611.0" y="871.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ der : NodoBST*</text>
+<line x1="1600.0" y1="876.0" x2="1880.0" y2="876.0" stroke="#94a3b8" stroke-width="1"/>
+<text x="1611.0" y="889.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ NodoBST(Envio*)</text>
+<rect x="730" y="80" width="560" height="230" rx="9" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.6" stroke-dasharray="7,4"/>
+<path d="M 730 104 q 0 -9 9 -9 h 542 q 9 0 9 9 v 18 h -560 z" fill="#64748b"/>
+<text x="741.0" y="95.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="10.5" font-style="italic" fill="rgba(255,255,255,0.85)">«contexto · Fachada»</text>
+<text x="741.0" y="114.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#ffffff">CentroDeDistribucion</text>
+<text x="741.0" y="135.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">- mesaClasificacion : MesaDeClasificacion   (by value)</text>
+<text x="741.0" y="153.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">- indice : IndiceBST                     (by value)</text>
+<line x1="730.0" y1="158.0" x2="1290.0" y2="158.0" stroke="#94a3b8" stroke-width="1"/>
+<text x="741.0" y="171.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ mesa() : MesaDeClasificacion&amp;</text>
+<text x="741.0" y="189.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ crearLoteZona(const string&amp;) : bool</text>
+<text x="741.0" y="207.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ indiceBST() : const IndiceBST&amp;</text>
+<text x="741.0" y="225.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ buscarEnBST(const string&amp;) const</text>
+<text x="741.0" y="243.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ recorrerBSTInOrder() const</text>
+<text x="741.0" y="261.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ mostrarAlturaBST() const</text>
+<text x="741.0" y="279.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ compararBSTconLineal(const string&amp;) const</text>
+<line x1="730.0" y1="284.0" x2="1290.0" y2="284.0" stroke="#94a3b8" stroke-width="1"/>
+<text x="741.0" y="301.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="10.5" font-style="italic" fill="#64748b">Compone por valor la mesa y el indice BST</text>
+<rect x="60" y="110" width="480" height="104" rx="9" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.6" stroke-dasharray="7,4"/>
+<path d="M 60 134 q 0 -9 9 -9 h 462 q 9 0 9 9 v 18 h -480 z" fill="#64748b"/>
+<text x="71.0" y="125.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="10.5" font-style="italic" fill="rgba(255,255,255,0.85)">«contexto · Grupo A»</text>
+<text x="71.0" y="144.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#ffffff">ListaPendientes</text>
+<text x="71.0" y="165.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ contarDeZona(const string&amp;) const : int</text>
+<text x="71.0" y="183.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ copiarDeZona(const string&amp;, Envio**, int) const : int</text>
+<line x1="60.0" y1="188.0" x2="540.0" y2="188.0" stroke="#94a3b8" stroke-width="1"/>
+<text x="71.0" y="205.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="10.5" font-style="italic" fill="#64748b">Fuente de referencias para crear el lote</text>
+<rect x="750" y="480" width="440" height="230" rx="9" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.6" stroke-dasharray="7,4"/>
+<path d="M 750 504 q 0 -9 9 -9 h 422 q 9 0 9 9 v 18 h -440 z" fill="#64748b"/>
+<text x="761.0" y="495.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="10.5" font-style="italic" fill="rgba(255,255,255,0.85)">«contexto · Grupo C»</text>
+<text x="761.0" y="514.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#ffffff">Envio</text>
+<text x="761.0" y="535.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">- codigo : string</text>
+<text x="761.0" y="553.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">- zona : string</text>
+<text x="761.0" y="571.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">- peso : double</text>
+<text x="761.0" y="589.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">- nivel : NivelServicio</text>
+<text x="761.0" y="607.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">- estado : Estado</text>
+<line x1="750.0" y1="612.0" x2="1190.0" y2="612.0" stroke="#94a3b8" stroke-width="1"/>
+<text x="761.0" y="625.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ getCodigo() const : const string&amp;</text>
+<text x="761.0" y="643.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ getPeso() const : double</text>
+<text x="761.0" y="661.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ getZona() const : const string&amp;</text>
+<text x="761.0" y="679.0" font-family="Consolas, Menlo, DejaVu Sans Mono, monospace" font-size="10.5" fill="#1f2937">+ mostrar() const</text>
+<line x1="750.0" y1="684.0" x2="1190.0" y2="684.0" stroke="#94a3b8" stroke-width="1"/>
+<text x="761.0" y="701.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="10.5" font-style="italic" fill="#64748b">Referenciado por lote, cola, pila y BST</text>
+<rect x="1400" y="80" width="480" height="98" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2"/>
+<text x="1412.0" y="99.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="#1f2937">Leyenda</text>
+<line x1="1416" y1="116" x2="1478" y2="116" stroke="#334155" stroke-width="1.6"/>
+<polygon points="1416,116 1425,112 1434,116 1425,120" fill="#334155" stroke="#334155"/>
+<text x="1492.0" y="120.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11" fill="#1f2937">composicion (dueno ◆)</text>
+<line x1="1416" y1="140" x2="1478" y2="140" stroke="#334155" stroke-width="1.6"/>
+<path d="M 1469 136 L 1478 140 L 1469 144" fill="none" stroke="#334155" stroke-width="1.6"/>
+<text x="1492.0" y="144.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11" fill="#1f2937">asociacion (puntero sin propiedad o miembro por valor)</text>
+<line x1="1416" y1="164" x2="1478" y2="164" stroke="#334155" stroke-width="1.6" stroke-dasharray="5,4"/>
+<path d="M 1469 160 L 1478 164 L 1469 168" fill="none" stroke="#334155" stroke-width="1.6"/>
+<text x="1492.0" y="168.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11" fill="#1f2937">dependencia (uso de tipos por parametro/retorno)</text>
+<rect x="1416" y="185" width="14" height="14" rx="3" fill="#0f766e"/>
+<text x="1435.0" y="196.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11" fill="#1f2937">RF09 (Mesa/Cola/Pila)</text>
+<rect x="1593.2" y="185" width="14" height="14" rx="3" fill="#047857"/>
+<text x="1612.2" y="196.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11" fill="#1f2937">RF10 (BST)</text>
+<rect x="1702.2" y="185" width="14" height="14" rx="3" fill="#64748b"/>
+<text x="1721.2" y="196.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11" fill="#1f2937">Contexto preexistente</text>
+<rect x="60" y="1370" width="1870" height="196" rx="10" fill="#f0fdfa" stroke="#5eead4" stroke-width="1.5"/>
+<text x="76.0" y="1396.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="14" font-weight="bold" fill="#0f766e">Modelo de Diseño y Ownership de las Clases Nuevas (RF09 y RF10)</text>
+<text x="80.0" y="1420.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" fill="#115e59">✓ RF09 (Mesa de clasificación): lote temporal Envio** con Insertion Sort estable in-place (O(n) mejor, O(n²) peor).</text>
+<text x="80.0" y="1444.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" fill="#115e59">✓ RF09.3 &amp; RF09.4: ColaEnvios (FIFO) y PilaEnvios (LIFO) con nodos enlazados propios y operaciones enqueue/dequeue/push/pop en O(1).</text>
+<text x="80.0" y="1468.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" fill="#115e59">✓ RF09.8 (Ownership del lote): lote, ColaEnvios y PilaEnvios contienen punteros NO propietarios (delete[] solo del arreglo; los Envio pertenecen a ListaDeEnvios).</text>
+<text x="80.0" y="1492.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" fill="#115e59">✓ RF10 (IndiceBST): árbol binario de búsqueda por código con inserción iterativa, búsqueda O(log n) esperado, in-order O(n) y altura O(n).</text>
+<text x="80.0" y="1516.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" fill="#115e59">✓ RF10.6 (Ownership del BST): IndiceBST destruye recursivamente en postorden solo sus NodoBST; jamás ejecuta delete sobre un Envio*.</text>
+<text x="80.0" y="1540.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" fill="#115e59">✓ Destrucción segura en cascada: en CentroDeDistribucion, mesa e indice se declaran después de registro, asegurando su liberación previa sin dangling pointers.</text>
+</svg>
