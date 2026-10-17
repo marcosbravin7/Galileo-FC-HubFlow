@@ -1,3 +1,4 @@
+/*
 #include "CentroDeDistribucion.h"
 #include <iostream>
 #include <string>
@@ -125,4 +126,41 @@ int main() {
     // Al salir de main, ~CentroDeDistribucion() libera todo en cascada:
     // ~ListaDeEnvios() destruye cada Envio (y su historial), y
     // ~ListaPendientes() destruye sus propios nodos.
+}
+*/
+
+#include "ArborBp.hpp"
+#include "CentroDeDistribucion.h"
+
+int main()
+{
+    /*
+    CentroDeDistribucion cd;
+    
+    Envio* e1 = new Envio("A", "D1", "CENTRO", 1.0, NivelServicio::ESTANDAR);
+    Envio* e2 = new Envio("B", "D2", "CENTRO", 1.0, NivelServicio::EXPRESS);
+    Envio* e3 = new Envio("C", "D3", "CENTRO", 1.0, NivelServicio::PRIORITARIO);
+    Envio* e4 = new Envio("D", "D4", "CENTRO", 1.0, NivelServicio::ESTANDAR);
+
+    ArbolBPlus *testArbol = new ArbolBPlus();
+    testArbol->insertar(e1->getCodigo(), e1);
+    testArbol->insertar(e2->getCodigo(), e2);
+    testArbol->insertar(e3->getCodigo(), e3);
+    testArbol->insertar(e4->getCodigo(), e4);
+
+    testArbol->mostrarEnOrden();
+
+    delete e1;
+    delete e2;
+    delete e3;
+    delete e4;
+
+    // print despues de eliminar los envios por fuera
+    // la estructura no tiene el ownership de envios
+    testArbol->mostrarEnOrden();
+
+    delete testArbol;
+    */
+
+    void* ptr = new (size_t)1;
 }
