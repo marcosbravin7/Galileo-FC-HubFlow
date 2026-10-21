@@ -18,6 +18,7 @@ void mostrarMenu() {
     cout << "10. Mesa de clasificacion y despacho (RF09)\n";
     cout << "11. Registrar entrega (RF07)\n";
     cout << "12. Indice de envios BST (RF10)\n";
+    cout << "13. Consultas avanzadas de envios (RF14)\n";
     cout << "0.  Finalizar\n";
     cout << "Opcion: ";
 }
@@ -63,6 +64,134 @@ void menuBST(CentroDeDistribucion& cd) {
             string cod;
             cout << "Codigo a buscar: "; getline(cin, cod);
             cd.compararBSTconLineal(cod);
+
+        } else if (op != 0) {
+            cout << "Opcion invalida.\n";
+        }
+    }
+}
+
+void mostrarMenuConsultas() {
+    cout << "\n===== CONSULTAS AVANZADAS DE ENVIOS =====\n";
+    cout << "1.  Buscar envio por codigo (arbol B+)\n";
+    cout << "2.  Buscar envios por rango de codigos\n";
+    cout << "3.  Ver BitSet de estados de un envio\n";
+    cout << "4.  Comparar BitSet de dos envios\n";
+    cout << "5.  Armar conjunto A (por zona o servicio)\n";
+    cout << "6.  Armar conjunto B (por zona o servicio)\n";
+    cout << "7.  Ver conjuntos A y B\n";
+    cout << "8.  Union (A U B)\n";
+    cout << "9.  Interseccion (A n B)\n";
+    cout << "10. Diferencia (A - B)\n";
+    cout << "11. Ver estructura del arbol B+\n";
+    cout << "0.  Volver\n";
+    cout << "Opcion: ";
+}
+
+// Pide el criterio por consola y arma el conjunto. Devuelve false si la
+// opcion ingresada no es valida (en ese caso no modifica `destino`).
+bool armarConjunto(const CentroDeDistribucion& cd, SetCodigos& destino, string& descripcion) {
+    int criterio;
+    cout << "Criterio (1=Zona, 2=Servicio): ";
+    cin >> criterio;
+    if (cin.fail()) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Criterio invalido.\n";
+        return false;
+    }
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    if (criterio == 1) {
+        string zona;
+        cout << "Zona (NORTE/SUR/CENTRO): "; getline(cin, zona);
+        destino = cd.conjuntoPorZona(zona);
+        descripcion = "envios de zona " + zona;
+        return true;
+    }
+    if (criterio == 2) {
+        int nivelOpcion;
+        NivelServicio nivel;
+        cout << "Servicio (1=EXPRESS, 2=PRIORITARIO, 3=ESTANDAR): "; cin >> nivelOpcion;
+        if (cin.fail()) { cin.clear(); nivelOpcion = 0; }
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        if (!intANivel(nivelOpcion, nivel)) {
+            cout << "Servicio invalido.\n";
+            return false;
+        }
+        destino = cd.conjuntoPorServicio(nivel);
+        descripcion = "envios con servicio " + nivelToString(nivel);
+        return true;
+    }
+    cout << "Criterio invalido.\n";
+    return false;
+}
+
+// Submenu del RF14. Los conjuntos A y B son variables locales: se liberan
+// solos (destructor de SetCodigos) al volver al menu principal. Como guardan
+// solo codigos, se arman de nuevo cada vez que se eligen, con los envios que
+// existan en ese momento.
+void menuConsultas(CentroDeDistribucion& cd) {
+    SetCodigos a, b;
+    string descA = "(sin armar)", descB = "(sin armar)";
+    int op = -1;
+    while (op != 0) {
+        mostrarMenuConsultas();
+        cin >> op;
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Opcion invalida.\n";
+            op = -1;
+            continue;
+        }
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+        if (op == 1) {
+            string cod;
+            cout << "Codigo a buscar: "; getline(cin, cod);
+            cd.buscarEnBMas(cod);
+
+        } else if (op == 2) {
+            string desde, hasta;
+            cout << "Desde: "; getline(cin, desde);
+            cout << "Hasta: "; getline(cin, hasta);
+            cd.buscarRangoBMas(desde, hasta);
+
+        } else if (op == 3) {
+            string cod;
+            cout << "Codigo: "; getline(cin, cod);
+            cd.mostrarBitSet(cod);
+
+        } else if (op == 4) {
+            string cod1, cod2;
+            cout << "Primer codigo: "; getline(cin, cod1);
+            cout << "Segundo codigo: "; getline(cin, cod2);
+            cd.compararBitSets(cod1, cod2);
+
+        } else if (op == 5) {
+            if (armarConjunto(cd, a, descA)) cd.mostrarConjunto("A", a);
+
+        } else if (op == 6) {
+            if (armarConjunto(cd, b, descB)) cd.mostrarConjunto("B", b);
+
+        } else if (op == 7) {
+            cout << "A: " << descA << "\n";
+            cd.mostrarConjunto("A", a);
+            cout << "B: " << descB << "\n";
+            cd.mostrarConjunto("B", b);
+
+        } else if (op == 8) {
+            cd.mostrarConjunto("A U B", a.unionCon(b));
+
+        } else if (op == 9) {
+            cd.mostrarConjunto("A n B", a.intersection(b));
+
+        } else if (op == 10) {
+            cd.mostrarConjunto("A - B", a.difference(b));
+
+        } else if (op == 11) {
+            cd.mostrarEstructuraBMas();
 
         } else if (op != 0) {
             cout << "Opcion invalida.\n";
@@ -278,6 +407,9 @@ int main() {
         } else if (opcion == 12) {
             menuBST(cd);
 
+        } else if (opcion == 13) {
+            menuConsultas(cd);
+
         } else if (opcion == 0) {
             cout << "Finalizando... liberando memoria.\n";
 
@@ -289,7 +421,7 @@ int main() {
 
     return 0;
     // Al salir de main, ~CentroDeDistribucion() libera todo en cascada:
-    // primero la mesa y el indice BST (solo sus nodos/arreglos), despues
+    // primero el arbol B+, el indice BST y la mesa (solo sus nodos/arreglos), despues
     // ~ListaPendientes() (solo sus nodos) y por ultimo ~ListaDeEnvios(), que
     // destruye cada Envio (y su historial). Solo ListaDeEnvios hace delete
     // sobre los Envio.

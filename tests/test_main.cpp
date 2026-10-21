@@ -1277,6 +1277,300 @@ void testRF10_ComparacionDeBusquedas() {
              "Con el lote ordenado por codigo: lineal 15 comparaciones y binaria 4");
 }
 
+// ============================================================
+// Ampliacion: consultas avanzadas (RF11 a RF14)
+// Casos de prueba obligatorios 1 a 6 de la consigna de la ampliacion.
+// ============================================================
+
+// Codigo PKG-<1000 + n>, por ejemplo n = 5 -> "PKG-1005".
+static string codigoPKG(int n) {
+    return "PKG-" + to_string(1000 + n);
+}
+
+// Revisa que las hojas, recorridas con los enlaces, tengan todas las claves
+// en orden estrictamente ascendente y que en total sean `esperadas`.
+static bool hojasOrdenadas(const ArbolBMas& arbol, int esperadas) {
+    int total = 0;
+    string anterior = "";
+    for (const NodoBMas* hoja = arbol.primeraHoja(); hoja != nullptr; hoja = hoja->siguiente) {
+        for (int i = 0; i < hoja->cantClaves; i++) {
+            if (total > 0 && !(anterior < hoja->claves[i])) return false;
+            anterior = hoja->claves[i];
+            total++;
+        }
+    }
+    return total == esperadas;
+}
+
+// Caso 1 — Arbol B+: divisiones de hojas, de internos y nueva raiz.
+void testAmpliacion_Caso1_ArbolBMas() {
+    cout << "\nAmpliacion Caso 1 - Arbol B+\n";
+    const int N = 20;
+    Envio* envios[N];
+    for (int i = 0; i < N; i++) {
+        envios[i] = new Envio(codigoPKG(i + 1), "Dest", "CENTRO", 1.0, NivelServicio::ESTANDAR);
+    }
+
+    {
+        ArbolBMas arbol;
+        chequear(arbol.insertar(envios[0]) && arbol.altura() == 1,
+                 "Insercion en arbol vacio: se crea una hoja raiz (altura 1)");
+        arbol.insertar(envios[1]);
+        arbol.insertar(envios[2]);
+        chequear(arbol.getDivisionesHoja() == 0 && arbol.getCantidad() == 3,
+                 "Con 3 envios la hoja todavia tiene lugar (no se divide)");
+
+        arbol.insertar(envios[3]);
+        chequear(arbol.getDivisionesHoja() == 1 && arbol.getRaicesCreadas() == 1 && arbol.altura() == 2,
+                 "El 4to envio divide la hoja y se crea una raiz nueva (altura 2)");
+        const NodoBMas* raiz = arbol.getRaiz();
+        chequear(!raiz->esHoja && raiz->cantClaves == 1 && raiz->claves[0] == codigoPKG(3),
+                 "La clave de separacion de la raiz es PKG-1003 (primera de la hoja derecha)");
+
+        // insertamos el resto desordenado para no depender del orden
+        int orden[] = {12, 5, 19, 8, 15, 4, 17, 10, 6, 13, 18, 7, 14, 9, 16, 11};
+        for (int k = 0; k < 16; k++) arbol.insertar(envios[orden[k]]);
+
+        chequear(arbol.getCantidad() == N, "Se indexaron los 20 envios");
+        chequear(arbol.getDivisionesInternas() > 0, "Hubo divisiones de nodos internos");
+        chequear(arbol.getRaicesCreadas() >= 2 && arbol.altura() >= 3,
+                 "Se volvio a crear una raiz nueva y el arbol crecio a 3 niveles o mas");
+        chequear(arbol.hojasAlMismoNivel(), "Todas las hojas estan al mismo nivel");
+        chequear(hojasOrdenadas(arbol, N), "Recorriendo las hojas enlazadas los codigos salen ordenados");
+
+        bool todosEncontrados = true;
+        for (int i = 0; i < N; i++) {
+            int visitados = 0;
+            if (arbol.buscar(codigoPKG(i + 1), visitados) != envios[i]) todosEncontrados = false;
+            if (visitados != arbol.altura()) todosEncontrados = false;
+        }
+        chequear(todosEncontrados,
+                 "Cada busqueda devuelve el mismo Envio y visita tantos nodos como niveles tiene el arbol");
+    }   // aca se destruye el arbol: libera solo sus nodos
+
+    chequear(envios[0]->getCodigo() == codigoPKG(1),
+             "Al destruir el arbol los Envio siguen vivos (referencias no propietarias)");
+    for (int i = 0; i < N; i++) delete envios[i];
+}
+
+// Caso 2 — Busqueda por rango.
+void testAmpliacion_Caso2_BusquedaPorRango() {
+    cout << "\nAmpliacion Caso 2 - Busqueda por rango\n";
+    CentroDeDistribucion cd;
+    capturarSalida([&] {
+        for (int i = 1; i <= 15; i++) {
+            cd.registrarEnvio(codigoPKG(i), "Dest", "CENTRO", 1.0, NivelServicio::ESTANDAR);
+        }
+    });
+
+    string salida = capturarSalida([&] { cd.buscarRangoBMas("PKG-1003", "PKG-1006"); });
+    // buscamos cada codigo en su propia linea (el titulo tambien nombra el rango)
+    size_t p3 = salida.find("\nPKG-1003\n"), p4 = salida.find("\nPKG-1004\n");
+    size_t p5 = salida.find("\nPKG-1005\n"), p6 = salida.find("\nPKG-1006\n");
+    chequear(p3 != string::npos && p3 < p4 && p4 < p5 && p5 < p6 && p6 != string::npos,
+             "Rango PKG-1003..PKG-1006: aparecen los 4 codigos en orden ascendente");
+    chequear(salida.find("PKG-1002") == string::npos && salida.find("PKG-1007") == string::npos,
+             "No aparecen codigos fuera del rango");
+
+    const ArbolBMas& arbol = cd.indiceBMasConsulta();
+    Envio* resultado[15];
+    int visitados = 0;
+    int n = arbol.buscarRango("PKG-1005", "PKG-1012", resultado, 15, visitados);
+    bool exactos = (n == 8);
+    for (int i = 0; i < n && exactos; i++) {
+        if (resultado[i]->getCodigo() != codigoPKG(5 + i)) exactos = false;
+    }
+    chequear(exactos, "Rango que cruza varias hojas: PKG-1005..PKG-1012 devuelve exactamente 8 en orden");
+    chequear(visitados < arbol.altura() + 6,
+             "El rango baja una sola vez y sigue por las hojas (no recorre todo el arbol)");
+}
+
+// Caso 3 — BitSet.
+void testAmpliacion_Caso3_BitSet() {
+    cout << "\nAmpliacion Caso 3 - BitSet\n";
+    CentroDeDistribucion cd;
+    capturarSalida([&] {
+        cd.registrarEnvio("PKG-2001", "Dest", "NORTE", 1.0, NivelServicio::EXPRESS);
+    });
+    const Envio* e = cd.obtenerEnvio("PKG-2001");
+    chequear(e->getEstadosVisitados().toString() == "00001", "Recien registrado: solo RECIBIDO (00001)");
+
+    capturarSalida([&] {
+        cd.cambiarEstado("PKG-2001", Estado::CLASIFICADO, "Clasificado");
+        cd.cambiarEstado("PKG-2001", Estado::EN_REPARTO, "Sale a reparto");
+    });
+    chequear(e->getEstadosVisitados().toString() == "00111",
+             "RECIBIDO, CLASIFICADO y EN_REPARTO -> 00111 (ejemplo de la consigna)");
+
+    capturarSalida([&] {
+        cd.reprogramarEnvio("PKG-2001", "Ausente");
+        cd.cambiarEstado("PKG-2001", Estado::EN_REPARTO, "Segundo intento");
+    });
+    const BitSet& b = e->getEstadosVisitados();
+    chequear(b.test(3) && !b.test(4) && b.count() == 4,
+             "Despues de reprogramar: bit 3 en 1, bit 4 en 0 y count() = 4");
+    chequear(e->estuvoEn(Estado::REPROGRAMADO) && e->getEstado() == Estado::EN_REPARTO,
+             "Guarda la historia: estuvo REPROGRAMADO aunque ahora este EN_REPARTO");
+
+    string salida = capturarSalida([&] { cd.mostrarBitSet("PKG-2001"); });
+    chequear(salida.find("Cantidad de estados distintos: 4") != string::npos &&
+                 salida.find("Estuvo REPROGRAMADO: si") != string::npos,
+             "La consulta muestra la cantidad de estados y si estuvo REPROGRAMADO");
+
+    BitSet x, y;
+    x.set(0); x.set(1); x.set(2);   // 00111
+    y.set(0); y.set(2); y.set(3);   // 01101
+    chequear(x.any() && x.count() == 3 && x.test(1) && !x.test(3), "set/test/count/any sobre 00111");
+    chequear((x & y).toString() == "00101", "AND: 00111 & 01101 = 00101");
+    chequear((x | y).toString() == "01111", "OR:  00111 | 01101 = 01111");
+    chequear((x ^ y).toString() == "01010", "XOR: 00111 ^ 01101 = 01010");
+    x.reset(1);
+    chequear(x.toString() == "00101" && x.count() == 2, "reset(1) apaga solo ese bit");
+}
+
+// Caso 4 — Set.
+void testAmpliacion_Caso4_Set() {
+    cout << "\nAmpliacion Caso 4 - Set\n";
+    SetCodigos a, b;
+    a.insert("PKG-1008"); a.insert("PKG-1002"); a.insert("PKG-1005");
+    b.insert("PKG-1006"); b.insert("PKG-1002");
+
+    chequear(a.toString() == "{PKG-1002, PKG-1005, PKG-1008}" && a.size() == 3,
+             "A = {PKG-1002, PKG-1005, PKG-1008} (queda ordenado)");
+    chequear(a.unionCon(b).toString() == "{PKG-1002, PKG-1005, PKG-1006, PKG-1008}",
+             "A U B = {PKG-1002, PKG-1005, PKG-1006, PKG-1008}");
+    chequear(a.intersection(b).toString() == "{PKG-1002}", "A n B = {PKG-1002}");
+    chequear(a.difference(b).toString() == "{PKG-1005, PKG-1008}", "A - B = {PKG-1005, PKG-1008}");
+    chequear(a.unionCon(b).size() == 4, "La union no repite el elemento compartido");
+
+    chequear(!a.insert("PKG-1005") && a.size() == 3, "No se admiten duplicados (insert devuelve false)");
+    chequear(a.contains("PKG-1005") && !a.contains("PKG-1006"), "contains funciona");
+    chequear(a.remove("PKG-1005") && a.size() == 2 && !a.contains("PKG-1005"), "remove elimina el elemento");
+
+    // los mismos conjuntos, pero generados desde el sistema (RF13.2)
+    CentroDeDistribucion cd;
+    capturarSalida([&] {
+        cd.registrarEnvio("PKG-1001", "Ana Torres",    "CENTRO", 1.20, NivelServicio::ESTANDAR);
+        cd.registrarEnvio("PKG-1002", "Bruno Diaz",    "NORTE",  0.75, NivelServicio::EXPRESS);
+        cd.registrarEnvio("PKG-1003", "Carla Ruiz",    "SUR",    4.10, NivelServicio::PRIORITARIO);
+        cd.registrarEnvio("PKG-1004", "Diego Lopez",   "CENTRO", 2.30, NivelServicio::ESTANDAR);
+        cd.registrarEnvio("PKG-1005", "Elena Castro",  "NORTE",  1.90, NivelServicio::PRIORITARIO);
+        cd.registrarEnvio("PKG-1006", "Franco Gomez",  "SUR",    0.50, NivelServicio::EXPRESS);
+        cd.registrarEnvio("PKG-1007", "Gabriela Soto", "CENTRO", 6.20, NivelServicio::ESTANDAR);
+        cd.registrarEnvio("PKG-1008", "Hugo Perez",    "NORTE",  3.40, NivelServicio::PRIORITARIO);
+    });
+    SetCodigos norte = cd.conjuntoPorZona("NORTE");
+    SetCodigos express = cd.conjuntoPorServicio(NivelServicio::EXPRESS);
+    chequear(norte.toString() == "{PKG-1002, PKG-1005, PKG-1008}", "Conjunto por zona NORTE");
+    chequear(express.toString() == "{PKG-1002, PKG-1006}", "Conjunto por servicio EXPRESS");
+    chequear(norte.intersection(express).toString() == "{PKG-1002}", "NORTE n EXPRESS = {PKG-1002}");
+}
+
+// Caso 5 — Casos limite.
+void testAmpliacion_Caso5_CasosLimite() {
+    cout << "\nAmpliacion Caso 5 - Casos limite\n";
+    {
+        ArbolBMas vacio;
+        int visitados = -1;
+        Envio* rango[1];
+        chequear(vacio.estaVacio() && vacio.altura() == 0 && vacio.buscar("PKG-1001", visitados) == nullptr &&
+                     visitados == 0 && vacio.buscarRango("A", "Z", rango, 1, visitados) == 0,
+                 "Arbol B+ vacio: altura 0, la busqueda y el rango no encuentran nada");
+    }
+
+    CentroDeDistribucion cd;
+    capturarSalida([&] {
+        for (int i = 1; i <= 6; i++) cd.registrarEnvio(codigoPKG(i), "Dest", "SUR", 1.0, NivelServicio::ESTANDAR);
+    });
+    string noExiste = capturarSalida([&] { cd.buscarEnBMas("PKG-9999"); });
+    chequear(noExiste.find("no encontrado") != string::npos, "Busqueda de un codigo inexistente");
+
+    string dup = capturarSalida([&] {
+        cd.registrarEnvio("PKG-1003", "Otro", "NORTE", 2.0, NivelServicio::EXPRESS);
+    });
+    chequear(dup.find("ya existe") != string::npos && cd.indiceBMasConsulta().getCantidad() == 6,
+             "Insercion duplicada en el sistema: se rechaza y el B+ sigue con 6");
+    Envio otro("PKG-1003", "Otro", "NORTE", 2.0, NivelServicio::EXPRESS);
+    {
+        ArbolBMas arbol;
+        arbol.insertar(&otro);
+        chequear(!arbol.insertar(&otro) && arbol.getCantidad() == 1,
+                 "Insercion duplicada directa en el B+: insertar devuelve false");
+    }
+
+    string sinResultados = capturarSalida([&] { cd.buscarRangoBMas("PKG-5000", "PKG-6000"); });
+    chequear(sinResultados.find("No hay envios en el rango") != string::npos, "Busqueda por rango sin resultados");
+
+    BitSet vacioBits;
+    chequear(!vacioBits.any() && vacioBits.count() == 0 && vacioBits.toString() == "00000",
+             "BitSet sin bits activos: any() false y count() 0");
+    chequear(!vacioBits.set(5) && !vacioBits.set(-1) && !vacioBits.reset(9) && !vacioBits.test(7) &&
+                 vacioBits.count() == 0,
+             "Posicion de bit invalida: se rechaza sin modificar el BitSet");
+
+    SetCodigos vacio, c;
+    c.insert("PKG-1001"); c.insert("PKG-1002");
+    chequear(vacio.empty() && vacio.size() == 0 && !vacio.contains("PKG-1001") && vacio.toString() == "{}",
+             "Set vacio");
+    chequear(c.unionCon(vacio).toString() == c.toString() && vacio.unionCon(c).size() == 2,
+             "Union con un conjunto vacio da el mismo conjunto");
+    SetCodigos d;
+    d.insert("PKG-1003"); d.insert("PKG-1004");
+    chequear(c.intersection(d).empty(), "Interseccion de conjuntos disjuntos es vacia");
+    chequear(!c.remove("PKG-9999") && c.size() == 2, "Eliminar un elemento inexistente devuelve false");
+
+    SetCodigos copia = c;   // copia profunda: se pueden modificar por separado
+    copia.remove("PKG-1001");
+    chequear(c.size() == 2 && copia.size() == 1, "Copiar un Set no comparte nodos con el original");
+}
+
+// Caso 6 — Integracion.
+void testAmpliacion_Caso6_Integracion() {
+    cout << "\nAmpliacion Caso 6 - Integracion\n";
+    CentroDeDistribucion cd;
+    capturarSalida([&] {
+        cd.registrarEnvio("PKG-1002", "Bruno Diaz",   "NORTE", 0.75, NivelServicio::EXPRESS);
+        cd.registrarEnvio("PKG-1005", "Elena Castro", "NORTE", 1.90, NivelServicio::PRIORITARIO);
+        cd.registrarEnvio("PKG-1006", "Franco Gomez", "SUR",   0.50, NivelServicio::EXPRESS);
+    });
+
+    string alta = capturarSalida([&] {
+        cd.registrarEnvio("PKG-1009", "Ivana Mendez", "NORTE", 2.10, NivelServicio::EXPRESS);
+    });
+    chequear(alta.find("registrado") != string::npos, "Se registra un envio nuevo");
+
+    string busqueda = capturarSalida([&] { cd.buscarEnBMas("PKG-1009"); });
+    chequear(busqueda.find("Codigo: PKG-1009") != string::npos &&
+                 busqueda.find("Destinatario: Ivana Mendez") != string::npos &&
+                 busqueda.find("Zona: NORTE") != string::npos &&
+                 busqueda.find("Servicio: EXPRESS") != string::npos &&
+                 busqueda.find("Nodos visitados:") != string::npos,
+             "Se lo encuentra con el arbol B+ y se muestran sus datos y los nodos visitados");
+
+    capturarSalida([&] { cd.despacharProximo(); });   // el primero de pendientes es PKG-1002 (EXPRESS)
+    capturarSalida([&] { cd.cambiarEstado("PKG-1009", Estado::EN_REPARTO, "Sale"); });
+    const Envio* e = cd.obtenerEnvio("PKG-1009");
+    chequear(e != nullptr && e->getEstadosVisitados().toString() == "00101",
+             "Su BitSet se actualiza solo al cambiar de estado (RECIBIDO + EN_REPARTO)");
+
+    string comparacion = capturarSalida([&] { cd.compararBitSets("PKG-1009", "PKG-1005"); });
+    chequear(comparacion.find("En comun (AND):        00001") != string::npos &&
+                 comparacion.find("Solo en PKG-1009: EN_REPARTO") != string::npos,
+             "Comparar BitSets: estados en comun y estados de uno solo");
+
+    SetCodigos norte = cd.conjuntoPorZona("NORTE");
+    SetCodigos express = cd.conjuntoPorServicio(NivelServicio::EXPRESS);
+    SetCodigos ambos = norte.intersection(express);
+    chequear(ambos.contains("PKG-1009") && ambos.toString() == "{PKG-1002, PKG-1009}",
+             "El envio nuevo aparece en NORTE n EXPRESS");
+
+    string detalle = capturarSalida([&] { cd.mostrarConjunto("A n B", ambos); });
+    chequear(detalle.find("PKG-1009 | NORTE | 2.10 kg | EXPRESS | EN_REPARTO") != string::npos,
+             "Con los codigos del Set se recuperan los datos completos usando el B+");
+    chequear(cd.obtenerEnvio("PKG-1009") == e,
+             "El B+ apunta al mismo objeto Envio (no se duplico)");
+}
+
 int main() {
     cout << "========== TESTS HUBFLOW ==========\n";
 
@@ -1311,6 +1605,13 @@ int main() {
     testRF10_7_Degeneracion();
     testRF10_2_IntegracionConElSistema();
     testRF10_ComparacionDeBusquedas();
+
+    testAmpliacion_Caso1_ArbolBMas();
+    testAmpliacion_Caso2_BusquedaPorRango();
+    testAmpliacion_Caso3_BitSet();
+    testAmpliacion_Caso4_Set();
+    testAmpliacion_Caso5_CasosLimite();
+    testAmpliacion_Caso6_Integracion();
 
     cout << "\n====================================\n";
     cout << (totalChequeos - chequeosFallidos) << "/" << totalChequeos << " checks OK\n";

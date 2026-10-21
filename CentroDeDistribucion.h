@@ -3,6 +3,9 @@
 #include "ListaPendientes.h"
 #include "MesaDeClasificacion.h"
 #include "IndiceBST.h"
+#include "ArbolBMas.h"
+#include "BitSet.h"
+#include "SetCodigos.h"
 #include <iostream>
 #include <string>
 using namespace std;
@@ -23,6 +26,31 @@ private:
     // declara DESPUES de `registro` por la misma razon que la mesa (se
     // destruye antes; ver el comentario de ownership en IndiceBST.h).
     IndiceBST indice;
+    // RF11 — indice B+ por codigo: tambien guarda referencias NO propietarias
+    // a los envios del registro. Va declarado despues de `registro` para que
+    // se destruya antes que los envios (ver ArbolBMas.h).
+    ArbolBMas indiceBMas;
+
+    // Ficha completa de un envio, con el formato del RF11.3.
+    static void mostrarFicha(const Envio* e) {
+        cout << "Codigo: " << e->getCodigo() << "\n";
+        cout << "Destinatario: " << e->getDestinatario() << "\n";
+        cout << "Zona: " << e->getZona() << "\n";
+        cout << "Servicio: " << nivelToString(e->getNivel()) << "\n";
+    }
+
+    // Lista los nombres de los estados cuyo bit esta prendido. La posicion
+    // del bit es el valor del enum Estado.
+    static string estadosDelBitSet(const BitSet& b) {
+        string texto = "";
+        for (int pos = 0; pos < b.size(); pos++) {
+            if (b.test(pos)) {
+                if (!texto.empty()) texto += ", ";
+                texto += estadoToString(static_cast<Estado>(pos));
+            }
+        }
+        return texto.empty() ? "(ninguno)" : texto;
+    }
 
     // Aplica un cambio de estado YA VALIDADO (transicionPermitida) y mantiene
     // la invariante "esta en pendientes <=> RECIBIDO/CLASIFICADO/REPROGRAMADO":
@@ -58,6 +86,7 @@ public:
         registro.agregar(e);
         pendientes.agregar(e);
         indice.insertar(e);   // RF10.2: misma referencia al mismo Envio, sin reconstruir el arbol
+        indiceBMas.insertar(e);   // RF11.2: el mismo Envio entra tambien al B+ (no se copia)
         cout << "Envio " << cod << " registrado correctamente.\n";
     }
 
@@ -244,5 +273,132 @@ public:
         cout << "Zona consultada: " << zona << "\n";
         cout << "Envio mas pesado: " << e->getCodigo() << "\n";
         cout << "Peso: " << e->getPeso() << " kg\n";
+    }
+
+    // =======================================================================
+    // RF14 — Consultas avanzadas (arbol B+, BitSet y Set)
+    // =======================================================================
+
+    const ArbolBMas& indiceBMasConsulta() const { return indiceBMas; }
+
+    // Devuelve el envio usando el B+ (nullptr si no existe). Es de solo
+    // lectura: sirve para consultar, no para cambiar el envio por afuera.
+    const Envio* obtenerEnvio(const string& codigo) const {
+        int visitados = 0;
+        return indiceBMas.buscar(codigo, visitados);
+    }
+
+    // RF11.3 — busqueda por codigo en el B+, con los nodos visitados.
+    void buscarEnBMas(const string& codigo) const {
+        int visitados = 0;
+        Envio* e = indiceBMas.buscar(codigo, visitados);
+        if (e == nullptr) cout << "Envio " << codigo << " no encontrado.\n";
+        else mostrarFicha(e);
+        cout << "Nodos visitados: " << visitados << "\n";
+    }
+
+    // RF11.4 — envios con codigo entre `desde` y `hasta` (ambos incluidos).
+    void buscarRangoBMas(const string& desde, const string& hasta) const {
+        if (desde > hasta) {
+            cout << "Rango invalido: 'desde' es mayor que 'hasta'.\n";
+            return;
+        }
+        if (indiceBMas.estaVacio()) {
+            cout << "No hay envios en el rango " << desde << " - " << hasta << ".\n";
+            return;
+        }
+        // arreglo temporal para los resultados: como mucho entran todos los
+        // envios. Lo reservamos aca y lo liberamos al final de la funcion.
+        int maximo = indiceBMas.getCantidad();
+        Envio** resultados = new Envio*[maximo];
+        int visitados = 0;
+        int encontrados = indiceBMas.buscarRango(desde, hasta, resultados, maximo, visitados);
+
+        if (encontrados == 0) {
+            cout << "No hay envios en el rango " << desde << " - " << hasta << ".\n";
+        } else {
+            cout << "Envios entre " << desde << " y " << hasta << ":\n";
+            for (int i = 0; i < encontrados; i++) cout << resultados[i]->getCodigo() << "\n";
+        }
+        cout << "Nodos visitados: " << visitados << "\n";
+        delete[] resultados;   // solo el arreglo; los Envio son del registro
+    }
+
+    // RF12.3 — estados por los que paso un envio.
+    void mostrarBitSet(const string& codigo) const {
+        const Envio* e = obtenerEnvio(codigo);
+        if (e == nullptr) { cout << "Envio " << codigo << " no encontrado.\n"; return; }
+        const BitSet& b = e->getEstadosVisitados();
+        cout << "Envio: " << codigo << " (estado actual: " << estadoToString(e->getEstado()) << ")\n";
+        cout << "Bit:     4 3 2 1 0\n";
+        cout << "Valor:  ";
+        for (int pos = b.size() - 1; pos >= 0; pos--) cout << " " << (b.test(pos) ? 1 : 0);
+        cout << "\n";
+        cout << "Estados por los que paso: " << estadosDelBitSet(b) << "\n";
+        cout << "Cantidad de estados distintos: " << b.count() << "\n";
+        cout << "Estuvo REPROGRAMADO: " << (e->estuvoEn(Estado::REPROGRAMADO) ? "si" : "no") << "\n";
+    }
+
+    // RF12.3 — compara los BitSet de dos envios:
+    //   AND -> estados que tienen los dos
+    //   XOR -> estados que tiene uno solo; para saber cual, se hace AND del
+    //          XOR con el BitSet de cada envio.
+    void compararBitSets(const string& cod1, const string& cod2) const {
+        const Envio* e1 = obtenerEnvio(cod1);
+        const Envio* e2 = obtenerEnvio(cod2);
+        if (e1 == nullptr) { cout << "Envio " << cod1 << " no encontrado.\n"; return; }
+        if (e2 == nullptr) { cout << "Envio " << cod2 << " no encontrado.\n"; return; }
+        const BitSet& b1 = e1->getEstadosVisitados();
+        const BitSet& b2 = e2->getEstadosVisitados();
+        BitSet comunes = b1 & b2;
+        BitSet distintos = b1 ^ b2;
+        BitSet todos = b1 | b2;
+        cout << cod1 << ": " << b1.toString() << "\n";
+        cout << cod2 << ": " << b2.toString() << "\n";
+        cout << "En comun (AND):        " << comunes.toString() << " -> " << estadosDelBitSet(comunes) << "\n";
+        cout << "Entre los dos (OR):    " << todos.toString() << " -> " << estadosDelBitSet(todos) << "\n";
+        cout << "En uno solo (XOR):     " << distintos.toString() << " -> " << estadosDelBitSet(distintos) << "\n";
+        cout << "  Solo en " << cod1 << ": " << estadosDelBitSet(distintos & b1) << "\n";
+        cout << "  Solo en " << cod2 << ": " << estadosDelBitSet(distintos & b2) << "\n";
+    }
+
+    // RF13.2 — conjunto con los codigos de una zona. Recorre las hojas del B+
+    // de izquierda a derecha, que es pasar por todos los envios conocidos.
+    SetCodigos conjuntoPorZona(const string& zona) const {
+        SetCodigos conjunto;
+        for (const NodoBMas* hoja = indiceBMas.primeraHoja(); hoja != nullptr; hoja = hoja->siguiente) {
+            for (int i = 0; i < hoja->cantClaves; i++) {
+                if (hoja->envios[i]->getZona() == zona) conjunto.insert(hoja->claves[i]);
+            }
+        }
+        return conjunto;
+    }
+
+    // RF13.2 — conjunto con los codigos de un nivel de servicio.
+    SetCodigos conjuntoPorServicio(NivelServicio nivel) const {
+        SetCodigos conjunto;
+        for (const NodoBMas* hoja = indiceBMas.primeraHoja(); hoja != nullptr; hoja = hoja->siguiente) {
+            for (int i = 0; i < hoja->cantClaves; i++) {
+                if (hoja->envios[i]->getNivel() == nivel) conjunto.insert(hoja->claves[i]);
+            }
+        }
+        return conjunto;
+    }
+
+    // RF14 — muestra un conjunto y, para cada codigo, recupera el envio
+    // completo con el arbol B+ (el Set solo guarda codigos).
+    void mostrarConjunto(const string& nombre, const SetCodigos& conjunto) const {
+        cout << nombre << " = " << conjunto.toString() << "  (" << conjunto.size() << " envios)\n";
+        for (const NodoSet* aux = conjunto.getPrimero(); aux != nullptr; aux = aux->siguiente) {
+            const Envio* e = obtenerEnvio(aux->codigo);
+            cout << "  ";
+            if (e != nullptr) e->mostrar();
+            else cout << aux->codigo << " (no esta en el indice)\n";
+        }
+    }
+
+    void mostrarEstructuraBMas() const {
+        cout << "=== Arbol B+ (orden " << ORDEN_BMAS << ") ===\n";
+        indiceBMas.mostrarEstructura();
     }
 };
