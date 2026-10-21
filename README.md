@@ -24,6 +24,10 @@
 - 🍔 Menú de consola para gestionar envíos pendientes y registrar movimientos.
 - 🧰 **Mesa de clasificación y despacho (RF09)**: lote por zona, Insertion Sort, Queue, Stack, búsqueda lineal y binaria.
 - 🌳 **Índice de envíos con BST (RF10)**: árbol binario de búsqueda propio por código, con búsqueda, in-order recursivo y altura recursiva.
+- 🌲 **Índice avanzado con Árbol B+ (RF11)**: árbol B+ propio de orden 4, búsqueda individual por código y búsqueda por rango sobre hojas enlazadas.
+- 🏷️ **Histórico de estados con BitSet (RF12)**: representación de estados transitados en 5 bits, operaciones bit a bit (&, |, ^) y comparación de envíos.
+- 📦 **Conjuntos de envíos con Set (RF13)**: conjunto propio ordenado para operaciones de unión, intersección y diferencia por zona y servicio.
+- 🔍 **Consultas avanzadas integradas (RF14)**: integración de B+, BitSet y Set para consultas completas sin duplicar objetos `Envio`.
 - 🔒 **Máquina de estados**: cada envío solo puede seguir el ciclo de vida permitido; `ENTREGADO` es un estado final (RF04, RF06, RF07).
 - 🔗 **Lista simplemente enlazada propia** → cola de prioridad estable: `EXPRESS > PRIORITARIO > ESTANDAR` (igual prioridad = orden de llegada).
 - ⇄ **Lista doblemente enlazada propia** → historial de movimientos por envío, recorríble adelante y atrás con punteros previos.
@@ -48,17 +52,20 @@ Todo el sistema está implementado en headers (`.h`) incluidos desde `main.cpp`.
 
 | Archivo | Contenido |
 |---|---|
-| `main.cpp` | Menú de consola y submenús de la mesa (RF09) y del índice BST (RF10) |
-| `CentroDeDistribucion.h` | Fachada: registro global + pendientes + mesa + índice BST |
+| `main.cpp` | Menú de consola y submenús: mesa (RF09), índice BST (RF10) y consultas avanzadas (RF14) |
+| `CentroDeDistribucion.h` | Fachada: registro global + pendientes + mesa + índice BST + índice B+ |
 | `ListaDeEnvios.h` | Lista de **todos** los envíos (única dueña de los `Envio`) |
 | `ListaPendientes.h` | Cola de prioridad estable (lista simple), resumen recursivo |
-| `Envio.h`, `Estados.h` | Entidad, enums y **máquina de estados** (`transicionPermitida`) |
+| `Envio.h`, `Estados.h` | Entidad, enums, **máquina de estados** y `BitSet` de estados transitados |
 | `HistorialDeMovimientos.h`, `Movimiento.h` | Historial (lista doblemente enlazada) |
 | `MesaDeClasificacion.h` | **RF09**: lote, Insertion Sort, búsquedas lineal/binaria |
 | `ColaEnvios.h` | **RF09.3**: Queue propia (FIFO) |
 | `PilaEnvios.h` | **RF09.4**: Stack propia (LIFO) |
 | `IndiceBST.h` | **RF10**: BST propio (nodo, inserción, búsqueda, in-order, altura) |
-| `tests/test_main.cpp` | Casos de la consigna + RF04/06/07, RF09 y RF10 (sin framework) |
+| `ArbolBMas.h` | **RF11**: Árbol B+ orden 4 (claves de separación, división, búsqueda y rango) |
+| `BitSet.h` | **RF12**: BitSet propio (máscaras de bits, operaciones bit a bit e histórico) |
+| `SetCodigos.h` | **RF13**: Set de códigos propio ordenado (unión, intersección y diferencia) |
+| `tests/test_main.cpp` | Casos de prueba de todo el sistema (RF01 a RF14, sin framework) |
 
 ## 🔒 Máquina de estados (RF04 / RF06 / RF07)
 
@@ -150,6 +157,46 @@ insertar o buscar recorre hasta *n* nodos. Solo un árbol balanceado (AVL, rojo-
 >
 > La recursión del in-order, de la altura y del destructor tiene profundidad igual a la altura del árbol, por lo que
 > en un árbol degenerado de muchísimos nodos podría agotar la pila.
+
+## 🌲 RF11 a RF14 — Consultas avanzadas (B+, BitSet y Set)
+
+Menú principal → opción **13**. Módulo de consultas avanzadas que integra tres estructuras hechas a mano sin duplicar los objetos `Envio`:
+
+### 🌳 RF11 — Índice avanzado con Árbol B+
+- **Estructura (Orden 4):** cada nodo soporta hasta 3 claves y 4 hijos. Los nodos internos guardan claves de separación; las hojas guardan claves, punteros a `Envio*` y un puntero `siguiente` a la hoja contigua. Todas las hojas están siempre a la misma profundidad.
+- **Inserción y división (RF11.2):** al llegar a 4 claves, la hoja se divide (2 y 2) y la clave mediana sube al padre (en hojas se copia; en internos se promueve). El árbol crece hacia arriba creando una nueva raíz cuando esta se desborda.
+- **Búsqueda por código (RF11.3):** desciende por los separadores internos hasta la hoja. Informa los datos del envío y la cantidad de **nodos visitados** ($h$ niveles).
+- **Búsqueda por rango (RF11.4):** desciende en $O(\log n)$ a la primera hoja y continúa secuencialmente por el enlace `siguiente` hasta superar el límite superior, sin volver a la raíz ni recorrer ramas innecesarias.
+
+### 🏷️ RF12 — Características y estados mediante BitSet
+- **Representación compacta:** implementado sobre un `unsigned int` (5 bits utilizados, uno por estado del enum `Estado`):
+  - `Bit 0`: `RECIBIDO` | `Bit 1`: `CLASIFICADO` | `Bit 2`: `EN_REPARTO` | `Bit 3`: `REPROGRAMADO` | `Bit 4`: `ENTREGADO`.
+- **Historial acumulado:** cada cambio de estado activa su bit (`Envio::cambiarEstado`), preservando la historia completa del paquete.
+- **Operaciones:** `set`, `reset`, `test`, `count`, `any`, y operadores bit a bit nativos `&` (estados comunes), `|` (estados totales) y `^` (estados exclusivos de uno).
+
+### 📦 RF13 — Conjuntos de envíos mediante Set
+- **Lista ordenada sin repetidos:** implementado como lista simplemente enlazada ordenada ascendentemente por código.
+- **Operaciones eficientes $O(n + m)$:** `unionCon`, `intersection` y `difference` recorren ambas listas en paralelo en una sola pasada (estilo *merge* de MergeSort).
+- **Filtros por atributos (RF13.2):** genera conjuntos de códigos por **zona** o **nivel de servicio** recorriendo las hojas del B+.
+- **Sin duplicar envíos:** el `Set` solo almacena `string` (códigos). La información completa se recupera consultando el Árbol B+.
+
+### 🔒 Ownership y gestión de memoria
+- `ArbolBMas`: guarda punteros no propietarios (`Envio*`). Su destructor libera únicamente los nodos `NodoBMas`. En `CentroDeDistribucion` se destruye antes que el registro de envíos para evitar *dangling pointers*.
+- `SetCodigos`: dueño de sus nodos `NodoSet`. Implementa **copia profunda** (constructor de copia y `operator=`) para evitar *double free* ante retornos por valor en operaciones.
+- `BitSet`: miembro por valor en `Envio`, sin memoria dinámica.
+
+### 📊 Complejidad de la ampliación
+
+| Estructura | Operación | Mejor caso | Peor caso |
+|---|---|:---:|:---:|
+| **B+** | Inserción | O(1) (vacío) | O(log n) |
+| **B+** | Búsqueda por código | O(1) (raíz hoja) | O(log n) |
+| **B+** | Búsqueda por rango | O(log n) | O(log n + k) |
+| **BitSet** | set / reset / test / any | O(1) | O(1) |
+| **BitSet** | count | O(1) | O(1) |
+| **BitSet** | AND / OR / XOR | O(1) | O(1) |
+| **Set** | Insertar / Eliminar / Contains | O(1) | O(n) |
+| **Set** | Unión / Intersección / Diferencia | O(1) o O(min(n, m)) | O(n + m) |
 
 ## ✅ Tests
 
